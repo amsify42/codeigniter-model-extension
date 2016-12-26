@@ -3,10 +3,11 @@ Codeigniter Model Extension
 
 The main purpose of these files is to make queries to database tables easier and create pagination with simple calls.
 
-For Extending model classes you need put two files 
-1. **MY_Model.php**
-2. **Pagination.php**
+For extending model classes you need put two files 
 
+ 1. **MY_Model.php**
+ 2. **Pagination.php** 
+    
 in **application/core/**
 
 Whenever you create model class, extend MY_Model instead of CI_Model like this
