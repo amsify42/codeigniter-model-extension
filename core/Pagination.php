@@ -6,14 +6,11 @@ class Pagination extends CI_Model {
 	private    $conditions     = false;
 	private    $limit  	       = 1; 
 	private    $customQuery;
-  protected  $CI_Conditions  = array(); 		
+        protected  $CI_Conditions  = array(); 		
 
 
-	function __construct(){
+ function __construct(){
       parent::__construct();
-
-      $this->getURISegment();
-
       $this->config['uri_segment']        = $this->getURISegment();
       $this->config['base_url']           = $this->getCurrentURL();
       $this->config['num_links']          = 5; 
@@ -142,18 +139,19 @@ class Pagination extends CI_Model {
           $this->db = $this->conditions($this->customQuery, $this->db);
         }
         return $this->db->get()->num_rows();
-    } 
+    }
 
 
     public function getURISegment() {
       $last     = $this->uri->total_segments();
       $segment  = $this->uri->segment($last);
+      
       if(!is_numeric($segment)) {
           $last++;
       } 
       return $last;
-      
-    }
+    } 
+
 
     public function getCurrentURL() {
        $currentURL = base_url(uri_string());  
@@ -161,9 +159,10 @@ class Pagination extends CI_Model {
 
        if($segment) {
           $currentURL = rtrim($currentURL, '/'.(int)($segment));
-       }
-       return $currentURL;
+        }
+        return $currentURL;
     }
+
 
 
     public function getLinks() {        
