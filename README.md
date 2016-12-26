@@ -39,11 +39,20 @@ Now, all methods called using this model will load data from table **app_users**
 
 Just like we are using getAll() method to get all rows from table users, you can also use below methods
 
-// To get all count of all rows
+// To get count of all rows
 
     $this->users->count_all();
+
 
 // To get the rows with conditions passed to it
 
     $conditions = array('active' => 1);
     $this->users->getWhere($conditions);
+
+
+// Get single row with particular ID or Conditions
+
+    $this->users->find(1);
+    // or
+    $conditions = array('id' => 1, 'active' => 1);
+    $this->users->find($conditions);
