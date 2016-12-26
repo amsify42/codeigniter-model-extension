@@ -85,7 +85,7 @@ To delete multiple rows in table
     $conditions = array('active' => 0);
     $this->users->deleteBatch($conditions);
 
-To check value already exist of multiple column
+To check value already exist of particular column
 
   
     $email = 'some@mail.com';
@@ -100,3 +100,30 @@ If you want to check value exist except for particular id of the table, you can 
 Now, while checking for unique value it will skip the row with this id.
 
 **Note:** Wherever the functions checking for ID will look for column **id** of that particular table not any other column name like **user_id** or **userid** or something else...
+
+
+
+If you want to get paginated result of this same table with limit 10, you can use function like this
+
+    $this->users->paginate(10);
+
+If you want to get paginated result with some conditions, you can do by couple of ways
+
+1) You can use codeigniter predefined function along with pagination method something like this
+
+    $this->users->where('active', 1)->order_by('id', 'DESC')->paginate(10);
+
+2) You can pass callback function as a parameter with conditions in it. Even here you can use predefined functions to extend the query.  Make sure you use parameter as query and return it.
+
+	$conditions = function($query) {
+		return $query->where('active', 1)->order_by('id', 'DESC');
+	}
+    $this->users->conditions($conditions)->paginate(10);
+
+3) For changing the pagination config you can pass config as 3rd parameter to the method paginate. 2nd parameter is page no. to use while getting pagination through Ajax but for now you can pass it as null value.
+
+    $config['uri_segment'] = 3;
+    $config['base_url']    = 'index.php/users';
+    $this->users->paginate(10, '', $config);
+
+
