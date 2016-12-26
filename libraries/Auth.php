@@ -3,7 +3,7 @@
 class Auth {
 
 	 private $table 	= 'users';
-	 private $redirect	= 'dealer/login';
+	 private $redirect	= 'admin/login';
 
 	 function __construct($params = array()) {
 	 	if(isset($params['table'])) {
@@ -17,7 +17,7 @@ class Auth {
 	 }
 
 
-	 public function filter($type) {
+	 public function filter($type, $redirect = '') {
 
 	 	 $redirect = true;
 
@@ -30,6 +30,13 @@ class Auth {
 	 	 if($redirect) { 
 	 	 	$this->CI->session->set_flashdata('error', 'Please login to view '.$type.' section');
 	 	 	redirect($this->redirect); 
+	 	 }
+	 }
+
+
+	 public function redirect($redirect) {
+	 	if(sizeof($this->CI->session->userdata()) > 1) {
+	 	 	redirect($redirect);
 	 	 }
 	 }
 
