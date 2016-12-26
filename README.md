@@ -37,30 +37,30 @@ If your database table name is different than model class name then you can add 
 
 Now, all methods called using this model will load data from table **app_users** instead of **users**
 
-Just like we are using getAll() method to get all rows from table users, you can also use below methods
+Just like we are using **getAll()** method to get all rows from table users, you can also use below methods
 
- - To get count of all rows
+
+To get count of all rows
 
     $this->users->count_all();
 
- - To get the rows with conditions passed to it
+To get the rows with conditions passed to it
 
     $conditions = array('active' => 1);
     $this->users->getWhere($conditions);
 
- - Get single row with particular ID or Conditions
+Get single row with particular ID or Conditions
 
     $this->users->find(1);
     // or
     $conditions = array('id' => 1, 'active' => 1);
     $this->users->find($conditions);
 
- - To insert single row in table
+To insert single row in table
 
     $row = array('name' => 'some name', 'active' => 1);
     $this->users->insert($row);
-
- - To insert multiple rows in table
+To insert multiple rows in table
 
     $rows = array(
           array('name' => 'some name', 'active' => 1),
@@ -68,25 +68,24 @@ Just like we are using getAll() method to get all rows from table users, you can
           );
     $this->users->insertBatch($rows);
 
- - To update single row in table
+To update single row in table
 
   
     $id  = 1;
     $row = array('name' => 'some name', 'active' => 1);
     $this->users->update($id, $row);
-
- - To delete row in table
+To delete row in table
 
   
     $id  = 1;
     $this->users->delete($id);
 
- - To delete multiple rows in table
+To delete multiple rows in table
 
     $conditions = array('active' => 0);
     $this->users->deleteBatch($conditions);
 
- - To check value already exist of multiple column
+To check value already exist of multiple column
 
   
     $email = 'some@mail.com';
