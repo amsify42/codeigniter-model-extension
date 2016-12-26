@@ -10,9 +10,11 @@ in **application/core/**
 
 Whenever you create model class, extend MY_Model instead of CI_Model like this
 
+```php
     class Users extends MY_Model {
     
     }
+```
 
 Now, when you load this model in any controller, you can use like this
 
