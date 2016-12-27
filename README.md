@@ -158,6 +158,7 @@ If you want to get paginated result with some conditions, you can do by couple o
 ```php
     $config['uri_segment'] = 3;
     $config['base_url']    = 'index.php/users';
-    $this->users->paginate(10, '', $config);
+    $this->data['users']   = $this->users->paginate(10, '', $config);
+    $this->data['links']   = $this->users->getLinks();
 ```
-
+**getLinks()** method will get pagination links with some default settings. Pass custom config settings to get the desired results for both pagination result and links. You can also check the constructor method of **Pagination.php** to see what default settings it is using.
