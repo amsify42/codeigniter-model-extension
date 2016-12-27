@@ -28,7 +28,7 @@ Now, when you load this model in any controller, you can use like this
     	}
 
 		public function home() {
-		 $data['users] = $this->users->getAll();
+		 $data['users'] = $this->users->getAll();
 		}
     }
 ```
