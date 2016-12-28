@@ -6,41 +6,64 @@ class Pagination extends CI_Model {
 	private    $conditions     = false;
 	private    $limit  	       = 1; 
 	private    $customQuery;
-        protected  $CI_Conditions  = array(); 		
+  	protected  $CI_Conditions  = array();
+  	protected  $objectRelease  = array(
+					'get',
+					'result',
+					'result_array',
+					'result_object',
+					'custom_result_object',
+					'row',
+					'unbuffered_row',
+					'row_array',
+					'row_object',
+					'custom_row_object',
+					'data_seek',
+					'set_row',
+					'next_row',
+					'previous_row',
+					'first_row',
+					'last_row',
+					'num_rows',
+					'num_fields',
+					'field_data',
+					'free_result',
+					'list_fields'
+					); 		
 
 
- function __construct(){
-      parent::__construct();
-      $this->config['uri_segment']        = $this->getURISegment();
-      $this->config['base_url']           = $this->getCurrentURL();
-      $this->config['num_links']          = 5; 
-      $this->config['use_page_numbers']   = TRUE;
-      $this->config['page_query_string']  = FALSE;
+	function __construct(){
+	      parent::__construct();
+	      $this->config['uri_segment']        = $this->getURISegment();
+	      $this->config['base_url']           = $this->getCurrentURL();
+	      $this->config['num_links']          = 5; 
+	      $this->config['use_page_numbers']   = TRUE;
+	      $this->config['page_query_string']  = FALSE;
 
-      $this->config['full_tag_open']      = '<ul class="pagination">';
-      $this->config['full_tag_close']     = '</ul>';
+	      $this->config['full_tag_open']      = '<ul class="pagination">';
+	      $this->config['full_tag_close']     = '</ul>';
 
-      $this->config['first_link']         = 'First';
-      $this->config['first_tag_open']     = '<li>';
-      $this->config['first_tag_close']    = '</li>';
+	      $this->config['first_link']         = 'First';
+	      $this->config['first_tag_open']     = '<li>';
+	      $this->config['first_tag_close']    = '</li>';
 
-      $this->config['prev_link']          = 'Prev';
-      $this->config['prev_tag_open']      = '<li>';
-      $this->config['prev_tag_close']     = '</li>';
+	      $this->config['prev_link']          = 'Prev';
+	      $this->config['prev_tag_open']      = '<li>';
+	      $this->config['prev_tag_close']     = '</li>';
 
-      $this->config['next_link']          = 'Next';
-      $this->config['next_tag_open']      = '<li>';
-      $this->config['next_tag_close']     = '</li>';
+	      $this->config['next_link']          = 'Next';
+	      $this->config['next_tag_open']      = '<li>';
+	      $this->config['next_tag_close']     = '</li>';
 
-      $this->config['cur_tag_open']       = '<li class="active"><a href="#">';
-      $this->config['cur_tag_close']      = '</a></li>';
+	      $this->config['cur_tag_open']       = '<li class="active"><a href="#">';
+	      $this->config['cur_tag_close']      = '</a></li>';
 
-      $this->config['num_tag_open']       = '<li>';
-      $this->config['num_tag_close']      = '</li>';
+	      $this->config['num_tag_open']       = '<li>';
+	      $this->config['num_tag_close']      = '</li>';
 
-      $this->config['last_link']          = 'Last';
-      $this->config['last_tag_open']      = '<li>';
-      $this->config['last_tag_close']     = '</li>';
+	      $this->config['last_link']          = 'Last';
+	      $this->config['last_tag_open']      = '<li>';
+	      $this->config['last_tag_close']     = '</li>';
 
     }	
 
@@ -52,9 +75,14 @@ class Pagination extends CI_Model {
            }
        } else {
             if(is_callable(array($this->db, $method))) {
-              $this->CI_Conditions[] = array('method' => $method, 'args' => $args);
-              call_user_func_array(array($this->db, $method), $args);
-              return $this;
+              if(in_array($method, $this->objectRelease)) {
+                $this->db->from($this->table);
+                return call_user_func_array(array($this->db, $method), $args);
+              } else {
+                $this->CI_Conditions[] = array('method' => $method, 'args' => $args);
+                call_user_func_array(array($this->db, $method), $args);
+                return $this;
+              }
             }
         }
    }
