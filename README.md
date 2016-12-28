@@ -129,6 +129,7 @@ Now, while checking for unique value it will skip the row with this id.
 **Note:** Wherever the functions checking for ID will look for column **id** of that particular table not any other column name like **user_id** or **userid** or something else...
 
 
+## Pagination
 
 If you want to get paginated result of this same table with limit 10, you can use function like this
 
@@ -165,3 +166,15 @@ If you want to get paginated result with some conditions, you can do by couple o
 **getLinks()** method will get pagination links with some default settings. Pass custom config settings to get the desired results for both pagination result and links. You can also check the constructor method of **Pagination.php** to see what default settings it is using.
 
 **Note:** For exisitng and custom config of pagination, do not forget to create respective routes in routes.php
+
+
+## Using Pre defined methods
+
+You can use all the pre defined db methods of codeigniter as a chain as well to get the result. Below are the examples
+
+```php
+ $this->users->order_by('id', 'DESC')->get()->result();
+ $this->users->order_by('id', 'DESC')->get()->result_array();
+ $this->users->order_by('id', 'DESC')->get()->row();
+ $this->users->where('id', 1)->get()->row();
+```
