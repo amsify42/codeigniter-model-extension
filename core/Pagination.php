@@ -7,6 +7,7 @@ class Pagination extends CI_Model {
 	private    $limit  	       = 1; 
 	private    $customQuery;
   	protected  $CI_Conditions  = array();
+  	protected  $relations      = array();
   	protected  $objectRelease  = array(
 					'get',
 					'result',
@@ -69,23 +70,25 @@ class Pagination extends CI_Model {
 
 
     public function __call($method, $args){
-       if(property_exists($this, $method)) {
-           if(is_callable($this->$method)) {
-               return call_user_func_array($this->$method, $args);
-           }
-       } else {
-            if(is_callable(array($this->db, $method))) {
-              if(in_array($method, $this->objectRelease)) {
-                $this->db->from($this->table);
+       if(method_exists($this->db, $method) && is_callable(array($this->db, $method))) {
+          if(in_array($method, $this->objectRelease)) {
+              $this->db->from($this->table);
+              if($method == 'get') {
                 return call_user_func_array(array($this->db, $method), $args);
               } else {
-                $this->CI_Conditions[] = array('method' => $method, 'args' => $args);
-                call_user_func_array(array($this->db, $method), $args);
-                return $this;
+                return $this->filterRelations(call_user_func_array(array($this->db, $method), $args));
               }
-            }
+          } else {
+            $this->CI_Conditions[] = array('method' => $method, 'args' => $args);
+            call_user_func_array(array($this->db, $method), $args);
+            return $this;
+          }
         }
-   }
+        else if(in_array($method, $this->objectRelease)) {
+            $this->db->from($this->table);
+            return $this->filterRelations(call_user_func_array(array($this->db->get(), $method), $args));
+        }
+    }
 
 
 
@@ -148,7 +151,7 @@ class Pagination extends CI_Model {
         if(!$query->num_rows()){
           return $this->data;
         } else {
-          return $query->result();
+          return $this->filterRelations($query->result());
         }
 
     }
