@@ -4,7 +4,7 @@ class Pagination extends CI_Model {
 	private    $page           = 1;
 	private    $config         = array();
 	private    $conditions     = false;
-	private    $limit  	       = 1; 
+	private    $limit  	   = 1; 
 	private    $customQuery;
   	protected  $CI_Conditions  = array();
   	protected  $relations      = array();
