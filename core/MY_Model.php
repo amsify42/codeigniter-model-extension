@@ -2,11 +2,11 @@
 require_once 'Pagination.php';
 class MY_Model extends Pagination {
 
-protected   $table        = '';
-protected   $data         = array();	
-protected   $getRelation  = false;
-protected   $resultType   = 'object';
-protected   $rowType      = 'multiple';
+   protected   $table        = '';
+   protected   $data         = array();	
+   protected   $getRelation  = false;
+   protected   $resultType   = 'object';
+   protected   $rowType      = 'multiple';
 
    function __construct(){
       parent::__construct();
