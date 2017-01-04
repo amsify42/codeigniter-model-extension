@@ -4,7 +4,7 @@ class Pagination extends CI_Model {
 	private    $page           = 1;
 	private    $config         = array();
 	private    $conditions     = false;
-	private    $limit  	   = 1; 
+	private    $limit  	       = 1; 
 	private    $customQuery;
   	protected  $CI_Conditions  = array();
   	protected  $relations      = array();
@@ -33,7 +33,7 @@ class Pagination extends CI_Model {
 					); 		
 
 
-	function __construct(){
+ 	function __construct(){
 	      parent::__construct();
 	      $this->config['uri_segment']        = $this->getURISegment();
 	      $this->config['base_url']           = $this->getCurrentURL();
@@ -224,5 +224,6 @@ class Pagination extends CI_Model {
       }
       return $this->config;
     }
+	
 
 }
