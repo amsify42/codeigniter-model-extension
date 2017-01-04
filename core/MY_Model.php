@@ -1,13 +1,12 @@
 <?php
 require_once 'Pagination.php';
-
 class MY_Model extends Pagination {
 
-	 protected   $table        = '';
-	 protected   $data         = array();	
-   protected   $getRelation  = false;
-   protected   $resultType   = 'object';
-   protected   $rowType      = 'multiple';
+protected   $table        = '';
+protected   $data         = array();	
+protected   $getRelation  = false;
+protected   $resultType   = 'object';
+protected   $rowType      = 'multiple';
 
    function __construct(){
       parent::__construct();
@@ -298,7 +297,7 @@ class MY_Model extends Pagination {
               if($column == '') {
                 $result->{$i} = $row;
               } else {
-                return $row->$column;
+                return $this->getColumnValue($row, $column);
               }
               $i++;
             }
@@ -308,7 +307,7 @@ class MY_Model extends Pagination {
               if($column == '') {
                 $result[$i] = $row;
               } else {
-                return $row[$column];
+                return $this->getColumnValue($row, $column);
               }
               $i++;
             }
@@ -317,6 +316,37 @@ class MY_Model extends Pagination {
         return $result;
       }
       return NULL;
+    }
+
+
+    protected function getColumnValue($row, $column) {
+
+        $value = '';
+
+        if($this->resultType == 'object') {
+          if(is_array($column)) {
+            if(isset($column['modify'])) {
+              $value = str_replace("_COL_", $row->$column['name'], $column['modify']);
+            } else {
+              $value = $row->$column['name'];
+            }
+          } else {
+            $value = $row->$column;
+          }
+        }
+        else if($this->resultType == 'array') {
+          if(is_array($column)) {
+            if(isset($column['modify'])) {
+              $value = str_replace("_COL_", $row[$column['name']], $column['modify']);
+            } else {
+              $value = $row[$column['name']];
+            }
+          } else {
+            $value = $row[$column];
+          }
+        }
+
+        return $value;
     }
 
 }
