@@ -10,7 +10,7 @@ class MY_Model extends Pagination {
     * Name of the database table
     * @var string
     */
-	 protected   $table        = '';
+   protected   $table        = '';
 
    /**
     * Database table column names
@@ -28,7 +28,7 @@ class MY_Model extends Pagination {
     * Temporary array for returning
     * @var array
     */
-	 protected   $data         = array();	
+   protected   $data         = array();	
 
    /**
     * True, if relational data is being called
