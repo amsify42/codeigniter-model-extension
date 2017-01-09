@@ -240,11 +240,11 @@ Let's say, we have **books** table which is having foriegn key **user_id** of **
 	}
 ```
 
-#These are the options we can pass
-**primary** 	- Name of the primary key of table. If not passed, it will take **id** as default
-**table**   	- Name of the table from which rows needs to fetched.
-**model**   	- Instead of table you can put **model** name which is created the way it is mentioned above.
-**variable**   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name in lower case if mentioned.
+### These are the options we can pass
+a) **primary** 	- Name of the primary key of table. If not passed, it will take **id** as default
+b) **table**   	- Name of the table from which rows needs to fetched.
+c) **model**   	- Instead of table you can put **model** name which is created the way it is mentioned above.
+d) **variable**   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name in lower case if mentioned.
 
 
 
