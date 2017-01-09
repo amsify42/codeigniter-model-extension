@@ -199,7 +199,7 @@ We can make the results set to hide the column values from rows. For example, If
       }
 ```
 
-**Note:** You can achieve this only by calling methods from the model object not by using $this->db separately anywhere
+**Note:** You can achieve this only by calling methods from the model object not by using **$this->db** separately somehwere
 
 ## Fillable columns
 
@@ -211,7 +211,28 @@ This option will not let any query to add any column data we pass for saving or 
       }
 ```
 
-**Note:** You can achieve this only by calling methods from the model object not by using $this->db separately anywhere
+**Note:** You can achieve this only by calling methods from the model object not by using **$this->db** separately somehwere
 
 ## Relations
+
+For getting rows or single column value from other database tables based on relations, you can define one protected function in your model class with name **setRelations**
+
+```php		
+     class Users extends MY_Model {
+    	 protected function setRelations() {}
+      }
+```
+
+There are three ways, we can attach data to our results
+
+1. Attaching multiple rows
+
+Let's say, we have books
+
+
+2. Attaching single column value
+
+3. Attaching single column value with some modification
+
+
 
