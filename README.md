@@ -179,7 +179,7 @@ You can use all the pre defined db methods of codeigniter as a chain as well to 
  $this->users->where('id', 1)->get()->row();
 ```
 
-You can also skip get() method and fetch the results. As get() method will automatically be called based on functions which fetch results.
+You can also skip get() method and fetch the results. As get() method will automatically be called based on functions.
 
 ```php
  $this->users->order_by('id', 'DESC')->result();
@@ -187,3 +187,31 @@ You can also skip get() method and fetch the results. As get() method will autom
  $this->users->order_by('id', 'DESC')->row();
  $this->users->where('id', 1)->row();
 ```
+
+
+## Hidden column values
+
+We can make the results set to hide the column values from rows. For example, If we have a table **users** and we don't want to allow **password** and **token** to be available whenever user information is fetched. We can define protected array variable with name **hidden** in model class like this
+
+```php		
+     class Users extends MY_Model {
+    	 protected $hidden = array('password', 'token');   
+      }
+```
+
+**Note:** You can achieve this only by calling methods from the model object not by using $this->db separately anywhere
+
+## Fillable columns
+
+This option will not let any query to add any column data we pass for saving or updating column values of table. Let's say, We want users to allow only **email**, **name** and **password** to be inserted or updated and rest of the column values must be ignored even if they pass it. We can define protected array variable with name **fillable** in model class like this
+
+```php		
+     class Users extends MY_Model {
+    	 protected $fillable = array('email', 'name', 'password');   
+      }
+```
+
+**Note:** You can achieve this only by calling methods from the model object not by using $this->db separately anywhere
+
+## Relations
+
