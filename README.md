@@ -179,7 +179,7 @@ You can use all the pre defined db methods of codeigniter as a chain as well to 
  $this->users->where('id', 1)->get()->row();
 ```
 
-You can also skip get() mwthod and fetch the results. As get() method will automatically be called based on preceeding functions.
+You can also skip get() method and fetch the results. As get() method will automatically be called based on preceeding functions.
 
 ```php
  $this->users->order_by('id', 'DESC')->result();
