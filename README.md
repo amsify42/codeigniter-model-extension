@@ -227,7 +227,26 @@ There are three ways, we can attach data to our results
 
 1. Attaching multiple rows
 
-Let's say, we have books
+Let's say, we have **books** table which is having foriegn key **user_id** of **users** table. Now for getting number of books belongs to users along with users result data, we can add the relation like this
+
+```php
+	protected function setRelations() {
+		$this->addRelation(array(
+                    'primary'   => 'id',      
+		    'table'     => 'books', 
+		    'foreign'   => 'user_id',
+		    'variable'  => 'books',
+		  ));
+	}
+```
+
+#These are the options we can pass
+**primary** 	- Name of the primary key of table. If not passed, it will take **id** as default
+**table**   	- Name of the table from which rows needs to fetched.
+**model**   	- Instead of table you can put **model** name which is created the way it is mentioned above.
+**variable**   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name in lower case if mentioned.
+
+
 
 
 2. Attaching single column value
