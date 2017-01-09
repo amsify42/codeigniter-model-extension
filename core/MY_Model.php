@@ -10,7 +10,7 @@ class MY_Model extends Pagination {
     * Name of the database table
     * @var string
     */
-   protected   $table        = '';
+	 protected   $table        = '';
 
    /**
     * Database table column names
@@ -28,7 +28,7 @@ class MY_Model extends Pagination {
     * Temporary array for returning
     * @var array
     */
-   protected   $data         = array();	
+	 protected   $data         = array();	
 
    /**
     * True, if relational data is being called
@@ -456,7 +456,7 @@ class MY_Model extends Pagination {
           foreach($this->relations as $relation) {
 
             $primary    = isset($relation['primary'])? $relation['primary'] : 'id';
-            $foriegn    = isset($relation['foriegn'])? $relation['foriegn'] : $this->table.'_id';
+            $foreign    = isset($relation['foreign'])? $relation['foreign'] : $this->table.'_id';
             $variable   = isset($relation['variable'])? $relation['variable'] : '';
             $column     = isset($relation['column'])? $relation['column'] : '';
             if($variable ==  '' && isset($relation['table'])) {
@@ -464,10 +464,10 @@ class MY_Model extends Pagination {
             }
 
             if(isset($relation['table'])) {
-              $result = $this->attachRelation($result, $primary, $foriegn, $variable, $relation['table'], 'table', $column);
+              $result = $this->attachRelation($result, $primary, $foreign, $variable, $relation['table'], 'table', $column);
             }
             else if(isset($relation['model'])) {
-              $result = $this->attachRelation($result, $primary, $foriegn, $variable, $relation['model'], 'model', $column);
+              $result = $this->attachRelation($result, $primary, $foreign, $variable, $relation['model'], 'model', $column);
             }
           }
         }
@@ -480,14 +480,14 @@ class MY_Model extends Pagination {
      * Function will add relational data to result data
      * @param  array  $result
      * @param  string $primary
-     * @param  string $foriegn
+     * @param  string $foreign
      * @param  string $variable
      * @param  string $table
      * @param  string $type
      * @param  string $column
      * @return array
      */
-    protected function attachRelation($result, $primary, $foriegn, $variable, $table, $type = 'table', $column = '') {
+    protected function attachRelation($result, $primary, $foreign, $variable, $table, $type = 'table', $column = '') {
 
         $IDs = $this->getResultIDsArray($result, $primary, $variable);
 
@@ -495,25 +495,25 @@ class MY_Model extends Pagination {
 
           if($type == 'model') {
             $this->load->model($table);
-            $rows   = $this->$table->getWhereIDs($IDs, $foriegn, $this->resultType);
+            $rows   = $this->$table->getWhereIDs($IDs, $foreign, $this->resultType);
           } else {
             $IDS    = implode(',', $IDs);
-            $rows   = $this->rawQuery("SELECT * FROM {$table} WHERE {$foriegn} IN({$IDS})", $this->resultType);
+            $rows   = $this->rawQuery("SELECT * FROM {$table} WHERE {$foreign} IN({$IDS})", $this->resultType);
           }
 
           foreach($result as $key => $res) {
             if($this->resultType == 'object') {
               if($this->rowType == 'single') {
-                $result->{$variable} = $this->extractRelatedRows($rows, $result->$primary, $foriegn, $column);
+                $result->{$variable} = $this->extractRelatedRows($rows, $result->$primary, $foreign, $column);
               } else {
-                $result[$key]->{$variable} = $this->extractRelatedRows($rows, $res->$primary, $foriegn, $column);
+                $result[$key]->{$variable} = $this->extractRelatedRows($rows, $res->$primary, $foreign, $column);
               }
             }
             else if($this->resultType == 'array') {
               if($this->rowType == 'single') {
-                $result[$variable] = $this->extractRelatedRows($rows, $result[$primary], $foriegn, $column);
+                $result[$variable] = $this->extractRelatedRows($rows, $result[$primary], $foreign, $column);
               } else {
-                $result[$key][$variable] = $this->extractRelatedRows($rows, $res[$primary], $foriegn, $column);
+                $result[$key][$variable] = $this->extractRelatedRows($rows, $res[$primary], $foreign, $column);
               }
             }
           }
@@ -528,11 +528,11 @@ class MY_Model extends Pagination {
      * Find and get related rows from other tables
      * @param  array or object $rows
      * @param  integer $primaryID
-     * @param  string $foriegn
+     * @param  string $foreign
      * @param  string $column
      * @return array or object
      */
-    protected function extractRelatedRows($rows, $primaryID, $foriegn, $column = '') {
+    protected function extractRelatedRows($rows, $primaryID, $foreign, $column = '') {
 
       $result = new stdClass();
       if($this->resultType == 'array') {
@@ -546,7 +546,7 @@ class MY_Model extends Pagination {
         $i = 0;
         foreach($rows as $row) {
           if($this->resultType == 'object') {
-            if($row->$foriegn == $primaryID) {
+            if($row->$foreign == $primaryID) {
               if($column == '') {
                 $result->{$i} = $row;
               } else {
@@ -556,7 +556,7 @@ class MY_Model extends Pagination {
             }
           }
           else if($this->resultType == 'array') {
-            if($row[$foriegn] == $primaryID) {
+            if($row[$foreign] == $primaryID) {
               if($column == '') {
                 $result[$i] = $row;
               } else {
