@@ -10,31 +10,31 @@ class Pagination extends CI_Model {
    * Pagination page number
    * @var integer
    */
-	private    $page           = 1;
+  private    $page = 1;
 
   /**
    * This is the array of pagination config
    * @var array
    */
-	private    $config         = array();
+  private    $config = array();
 
   /**
    * Set true if conditions passed for pagination
    * @var boolean
    */
-	private    $conditions     = false;
+  private    $conditions  = false;
 
   /**
    * Pagination limit per page
    * @var integer
    */
-	private    $limit  	       = 1; 
+  private    $limit = 1; 
 
   /**
    * Query created based on conditions passed
    * @var string
    */
-	private    $customQuery;
+  private    $customQuery;
 
   /**
    * This is a collection of conditions passed to pagination
@@ -46,7 +46,7 @@ class Pagination extends CI_Model {
    * This is a collection of relations added in model class
    * @var array
    */
-  protected  $relations      = array();
+  protected  $relations = array();
 
   /**
    * This is a collection of CI db method names which release results
