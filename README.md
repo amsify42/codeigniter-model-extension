@@ -273,9 +273,9 @@ For getting rows or single column value from other database tables based on rela
       }
 ```
 
-There are three ways, we can attach data to our results
+There are four ways, we can attach data to our results
 
-## 1. Attaching multiple rows
+### 1. Attaching multiple rows
 
 Let's say, we have **books** table which is having foriegn key **user_id** of **users** table. Now for getting number of books belongs to users along with users result data, we can add the relation like this
 
@@ -294,14 +294,51 @@ Let's say, we have **books** table which is having foriegn key **user_id** of **
 #### a) primary 	- Name of the primary key of table. If not passed, it will take **id** as default
 #### b) table   	- Name of the table from which rows needs to fetched.
 #### c) model   	- Instead of table you can put **model** name which is created the way it is mentioned above.
-#### d) variable   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name in lower case if mentioned.
+#### d) variable   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name(if set) in lower case.
 
+The result of setting the relation mentioned above will the attach the n number of books to users result set.
 
+```php
+	foreach($users as $user) {
+	    foreach($users->books as $book){
+	   }
+	}
+```
+As you can see, one more array is attached with name **books** to every row.
 
+### 3. Attaching single row
 
-## 2. Attaching single column value
+```php
+	protected function setRelations() {
+		$this->addRelation(array(
+                   	'primary'   => 'id',      
+		    	'table'     => 'books', 
+		    	'foreign'   => 'user_id',
+		    	'variable'  => 'books',
+			'row'       => true,
+			'column'    => array(
+			   'name'    => 'book',
+			),
+		  ));
+	}
+```
 
-## 3. Attaching single column value with some modification
+### more option
+#### a) column 	- Name of the primary key of table. If not passed, it will take **id** as default
+
+The result of setting the relation mentioned above will the attach the n number of books to users result set.
+
+```php
+	foreach($users as $user) {
+	    foreach($users->books as $book){
+	   }
+	}
+```
+As you can see, one more array is attached with name **books** to every row.
+
+### 3. Attaching single column value
+
+### 4. Attaching single column value with some modification
 
 
 
