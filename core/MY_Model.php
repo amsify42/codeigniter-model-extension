@@ -10,43 +10,43 @@ class MY_Model extends Pagination {
     * Name of the database table
     * @var string
     */
-   protected   $table        = '';
+   protected   $table = '';
 
    /**
     * Database table column names
     * @var array
     */
-   protected   $fillable     = array();
+   protected   $fillable = array();
 
    /**
     * Database table column names
     * @var array
     */
-   protected   $hidden       = array();
+   protected   $hidden = array();
 
    /**
     * Temporary array for returning
     * @var array
     */
-	 protected   $data         = array();	
+   protected   $data = array();	
 
    /**
     * True, if relational data is being called
     * @var boolean
     */
-   protected   $getRelation  = false;
+   protected   $getRelation = false;
 
    /**
     * For checking result type fetched by queries
     * @var string
     */
-   protected   $resultType   = 'object';
+   protected   $resultType = 'object';
 
    /**
     * For checking result fetched is single row or multiple
     * @var string
     */
-   protected   $rowType      = 'multiple';
+   protected   $rowType = 'multiple';
 
    /**
     * This will set automatic table name based on name of model class
@@ -548,13 +548,13 @@ class MY_Model extends Pagination {
 
     /**
      * Function will add relational data to result data
-     * @param  array  $result
-     * @param  string $primary
-     * @param  string $foreign
-     * @param  string $variable
-     * @param  string $table
-     * @param  string $type
-     * @param  string $column
+     * @param  array   $result
+     * @param  string  $primary
+     * @param  string  $foreign
+     * @param  string  $variable
+     * @param  string  $table
+     * @param  string  $type
+     * @param  string  $column
      * @return array
      */
     protected function attachRelation($result, $primary, $foreign, $variable, $table, $type = 'table', $column = '') {
@@ -598,8 +598,8 @@ class MY_Model extends Pagination {
      * Find and get related rows from other tables
      * @param  array or object $rows
      * @param  integer $primaryID
-     * @param  string $foreign
-     * @param  string $column
+     * @param  string  $foreign
+     * @param  string  $column
      * @return array or object
      */
     protected function extractRelatedRows($rows, $primaryID, $foreign, $column = '') {
@@ -654,7 +654,9 @@ class MY_Model extends Pagination {
 
         if($this->resultType == 'object') {
           if(is_array($column)) {
-            if(isset($column['modify'])) {
+            if(isset($column['row']) && $column['row']) {
+              return $row;
+            } else if(isset($column['modify'])) {
               $value = str_replace("_COL_", $row->$column['name'], $column['modify']);
             } else {
               $value = $row->$column['name'];
@@ -665,7 +667,9 @@ class MY_Model extends Pagination {
         }
         else if($this->resultType == 'array') {
           if(is_array($column)) {
-            if(isset($column['modify'])) {
+            if(isset($column['row']) && $column['row']) {
+              return $row;
+            } else if(isset($column['modify'])) {
               $value = str_replace("_COL_", $row[$column['name']], $column['modify']);
             } else {
               $value = $row[$column['name']];
