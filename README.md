@@ -47,6 +47,7 @@ Now, all methods called using this model will load data from table **app_users**
 
 Just like we are using **getAll()** method to get all rows from table users, you can also use below methods
 
+### Get
 
 To get count of all rows
 
@@ -85,6 +86,7 @@ For getting maximum, minimum, average and sum of values, you can use these below
     $this->users->sum('points');
 ```
 
+### Insert/Update
 
 To insert single row in table
 
@@ -114,6 +116,8 @@ If the value your passing for id is not of column name **id** then you can pass 
 ```php  
     $this->users->update($id, $row, 'userid');
 ```
+
+### Delete
 
 To delete row in table
 
@@ -154,6 +158,7 @@ To truncate the table
     $this->users->truncate();
 ```
 
+### Checking
 
 To check value already exist of particular column
 
@@ -286,10 +291,10 @@ Let's say, we have **books** table which is having foriegn key **user_id** of **
 ```
 
 ### These are the options we can pass
-#### a) **primary** 	- Name of the primary key of table. If not passed, it will take **id** as default
-b) **table**   	- Name of the table from which rows needs to fetched.
-c) **model**   	- Instead of table you can put **model** name which is created the way it is mentioned above.
-d) **variable**   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name in lower case if mentioned.
+#### a) primary 	- Name of the primary key of table. If not passed, it will take **id** as default
+#### b) table   	- Name of the table from which rows needs to fetched.
+#### c) model   	- Instead of table you can put **model** name which is created the way it is mentioned above.
+#### d) variable   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name in lower case if mentioned.
 
 
 
