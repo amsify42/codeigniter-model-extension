@@ -306,35 +306,7 @@ The result of setting the relation mentioned above will the attach the n number 
 ```
 As you can see, one more array is attached with name **books** to every row.
 
-### 3. Attaching single row
-
-```php
-	protected function setRelations() {
-		$this->addRelation(array(
-                   	'primary'   => 'id',      
-		    	'table'     => 'books', 
-		    	'foreign'   => 'user_id',
-		    	'variable'  => 'books',
-			'row'       => true,
-			'column'    => array(
-			   'name'    => 'book',
-			),
-		  ));
-	}
-```
-
-### more option
-#### a) column 	- Name of the primary key of table. If not passed, it will take **id** as default
-
-The result of setting the relation mentioned above will the attach the n number of books to users result set.
-
-```php
-	foreach($users as $user) {
-	    foreach($users->books as $book){
-	   }
-	}
-```
-As you can see, one more array is attached with name **books** to every row.
+### 2. Attaching single row
 
 ### 3. Attaching single column value
 
