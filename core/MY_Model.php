@@ -10,7 +10,7 @@ class MY_Model extends Pagination {
     * Name of the database table
     * @var string
     */
-	 protected   $table        = '';
+   protected   $table        = '';
 
    /**
     * Database table column names
@@ -134,17 +134,58 @@ class MY_Model extends Pagination {
     /**
      * Get single row based on id or condition is passed
      * @param  integer $id
+     * @param  string  $column
      * @return array
      */
-    public function find($id) {
+    public function find($id, $column = 'id') {
     	if($id) {
         if(is_array($id)) {
           return $this->db->get_where($this->table, $id)->row();
         } else {
-    		return $this->db->get_where($this->table, array('id' => $id))->row();
+    		  return $this->db->get_where($this->table, array($column => $id))->row();
         }
     	}
     	return $this->data;
+    }
+
+
+    /**
+     * return maximum of column values
+     * @param  $string $column
+     * @return integer
+     */
+    public function max($column) {
+      return $this->db->select_max($column)->get($this->table)->result()[0]->$column;
+    }
+
+
+    /**
+     * return minimum of column values
+     * @param  $string $column
+     * @return integer
+     */
+    public function min($column) {
+      return $this->db->select_min($column)->get($this->table)->result()[0]->$column;
+    }
+
+
+    /**
+     * return average of column values
+     * @param  $string $column
+     * @return integer
+     */
+    public function avg($column) {
+      return $this->db->select_avg($column)->get($this->table)->result()[0]->$column;
+    }
+
+
+    /**
+     * return sum of column values
+     * @param  $string $column
+     * @return integer
+     */
+    public function sum($column) {
+      return $this->db->select_sum($column)->get($this->table)->result()[0]->$column;
     }
 
 
@@ -180,16 +221,17 @@ class MY_Model extends Pagination {
     /**
      * For updating a row in table by id or condition
      * @param  integer or array $id
-     * @param  array  $data
+     * @param  array   $data
+     * @param  string  $column
      * @return boolean
      */
-    public function update($id, $data = array()) {
+    public function update($id, $data = array(), $column = 'id') {
      	if($id && sizeof($data) > 0) {
         $data = $this->filterFillable($data);
         if(is_array($id)) {
      		 return $this->db->where($id)->update($this->table, $data);
         } else {
-          return $this->db->where('id', $id)->update($this->table, $data);
+          return $this->db->where($column, $id)->update($this->table, $data);
         }
       }
       	return false;
@@ -198,14 +240,15 @@ class MY_Model extends Pagination {
     /**
      * For deleting single row by id or conditions
      * @param  integer or array $id
+     * @param  string  $column
      * @return boolean
      */
-    public function delete($id) {
+    public function delete($id, $column = 'id') {
     	if($id) {
         if(is_array($id)) {
           return $this->db->where($id)->delete($this->table);
         } else {
-          return $this->db->where('id', $id)->delete($this->table);
+          return $this->db->where($column, $id)->delete($this->table);
         }
       }
       return false;
@@ -226,6 +269,32 @@ class MY_Model extends Pagination {
         } 
       }
       return false;
+    }
+
+
+    /**
+     * For deleting multiple rows by Ids
+     * @param  array  $conditions
+     * @param  string $column
+     * @return boolean
+     */
+    public function deleteIDs($IDs, $column = 'id') {
+      if($IDs) {
+        if(is_array($IDs)) {
+          $this->db->where_in($column, $IDs);
+          return $this->db->delete($this->table);
+        } 
+      }
+      return false;
+    }
+
+
+    /**
+     * For deleting all rows from the table
+     * @return boolean
+     */
+    public function truncate() {
+      return $this->db->truncate($this->table);
     }
 
 
@@ -252,14 +321,15 @@ class MY_Model extends Pagination {
      * @param  string  $column
      * @param  any     $value
      * @param  integer $id
+     * @param  string  $primary
      * @return boolean
      */
-    public function checkUnique($column, $value, $id = 0) {
+    public function checkUnique($column, $value, $id = 0, $primary = 'id') {
         $row = array();
         if($id == 0) {
           $row = $this->db->get_where($this->table, array($column => $value))->num_rows();
         } else {
-          $row = $this->db->get_where($this->table, array('id !=' => $id, $column => $value))->num_rows();
+          $row = $this->db->get_where($this->table, array($primary.' !=' => $id, $column => $value))->num_rows();
         }
 
         if($row > 0) {
