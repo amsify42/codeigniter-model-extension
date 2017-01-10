@@ -76,7 +76,7 @@ Alternatively, you can pass 2nd parameter as column name if you don't want to ch
     $this->users->find(1, 'userid');
 ```
 
-For getting maximum, minimum, average and sum of values, you can use these below methods. The only parameter used here is the name of table column name
+For getting maximum, minimum, average and sum of values, you can use these below methods. The only parameter used here is the name of table column name and this calls will directly get the result value rather than array or object.
 
 ```php
     $this->users->max('points');
@@ -84,6 +84,7 @@ For getting maximum, minimum, average and sum of values, you can use these below
     $this->users->avg('points');
     $this->users->sum('points');
 ```
+
 
 To insert single row in table
 
@@ -109,6 +110,10 @@ To update single row in table
     $row = array('name' => 'some name', 'active' => 1);
     $this->users->update($id, $row);
 ```
+If the value your passing for id is not of column name **id** then you can pass 3rd parameter as column name
+```php  
+    $this->users->update($id, $row, 'userid');
+```
 
 To delete row in table
 
@@ -116,13 +121,39 @@ To delete row in table
     $id  = 1;
     $this->users->delete($id);
 ```
+If the value your passing for id is not of column name **id** then you can pass 2nd parameter as column name
+```php  
+    $this->users->delete($id, 'userid');
+```
 
-To delete multiple rows in table
+To delete multiple rows in table by conditions
 
 ```php
     $conditions = array('active' => 0);
     $this->users->deleteBatch($conditions);
 ```
+If primary key of the table is not **id** then you can pass 2nd parameter as column name because during the execution, function will delete the rows by primary keys
+```php
+    $this->users->deleteBatch($conditions, 'userid');
+```
+
+To delete multiple rows by their IDs
+
+```php
+    $IDs = array(1, 2, 3);
+    $this->users->deleteIDs($IDs);
+```
+If primary key of the table is not **id** then you can pass 2nd parameter as column name.
+```php
+    $this->users->deleteIDs($IDs, 'userid');
+```
+
+To truncate the table
+
+```php
+    $this->users->truncate();
+```
+
 
 To check value already exist of particular column
 
@@ -130,18 +161,17 @@ To check value already exist of particular column
     $email = 'some@mail.com';
     $this->users->checkUnique('email', $email);
 ```
-
 If you want to check value exist except for particular id of the table, you can pass 3rd parameter as id which you want to skip while checking value like this
-
 ```php
     $email = 'some@mail.com';
     $id    = 2;
     $this->users->checkUnique('email', $email, $id);
 ```
-
+If primary key of the table is not **id** then you can pass 4th parameter as column name.
+```php
+    $this->users->checkUnique('email', $email, $id, 'userid');
+```
 Now, while checking for unique value it will skip the row with this id.
-
-**Note:** Wherever the functions checking for ID will look for column **id** of that particular table not any other column name like **user_id** or **userid** or something else...
 
 
 ## Pagination
@@ -256,7 +286,7 @@ Let's say, we have **books** table which is having foriegn key **user_id** of **
 ```
 
 ### These are the options we can pass
-a) **primary** 	- Name of the primary key of table. If not passed, it will take **id** as default
+#### a) **primary** 	- Name of the primary key of table. If not passed, it will take **id** as default
 b) **table**   	- Name of the table from which rows needs to fetched.
 c) **model**   	- Instead of table you can put **model** name which is created the way it is mentioned above.
 d) **variable**   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name in lower case if mentioned.
