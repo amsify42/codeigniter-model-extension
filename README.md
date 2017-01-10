@@ -70,6 +70,21 @@ Get single row with particular ID or Conditions
     $this->users->find($conditions);
 ```
 
+Alternatively, you can pass 2nd parameter as column name if you don't want to check with column **id**
+
+```php
+    $this->users->find(1, 'userid');
+```
+
+For getting maximum, minimum, average and sum of values, you can use these below methods. The only parameter used here is the name of table column name
+
+```php
+    $this->users->max('points');
+    $this->users->min('points');
+    $this->users->avg('points');
+    $this->users->sum('points');
+```
+
 To insert single row in table
 
 ```php
