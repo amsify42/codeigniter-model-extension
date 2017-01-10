@@ -275,17 +275,17 @@ For getting rows or single column value from other database tables based on rela
 
 There are three ways, we can attach data to our results
 
-1. Attaching multiple rows
+## 1. Attaching multiple rows
 
 Let's say, we have **books** table which is having foriegn key **user_id** of **users** table. Now for getting number of books belongs to users along with users result data, we can add the relation like this
 
 ```php
 	protected function setRelations() {
 		$this->addRelation(array(
-                    'primary'   => 'id',      
-		    'table'     => 'books', 
-		    'foreign'   => 'user_id',
-		    'variable'  => 'books',
+                   	'primary'   => 'id',      
+		    	'table'     => 'books', 
+		    	'foreign'   => 'user_id',
+		    	'variable'  => 'books',
 		  ));
 	}
 ```
@@ -299,9 +299,9 @@ Let's say, we have **books** table which is having foriegn key **user_id** of **
 
 
 
-2. Attaching single column value
+## 2. Attaching single column value
 
-3. Attaching single column value with some modification
+## 3. Attaching single column value with some modification
 
 
 
