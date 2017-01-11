@@ -265,7 +265,7 @@ This option will not let any query to add any column data we pass for saving or 
 
 ## Relations
 
-For getting rows or single column value from other database tables based on relations, you can define one protected function in your model class with name **setRelations**
+For getting rows or single column value from other database tables based on relations, you have to define one protected function in your model class with name **setRelations**
 
 ```php		
      class Users extends MY_Model {
@@ -309,6 +309,8 @@ As you can see, one more array is attached with name **books** to every row.
 ### 2. Attaching single row
 For, attaching directly a single row to key, you can pass **single** as true like this
 
+#### e) single 	- If passed as true, single row will be attached
+
 ```php
 	protected function setRelations() {
 		$this->addRelation(array(
@@ -321,7 +323,6 @@ For, attaching directly a single row to key, you can pass **single** as true lik
 	}
 ```
 
-#### e) single 	- If passed as true, single row will be attached
 
 The result of setting the relation mentioned above will the attach single image row to users result set.
 
@@ -333,6 +334,8 @@ The result of setting the relation mentioned above will the attach single image 
 ```
 
 ### 3. Attaching single column value
+
+#### f) column 	- It can be either passed as string or array
 
 For getting only particular column value from table, you can pass one more option as **column**
 ```php
