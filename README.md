@@ -282,11 +282,11 @@ Let's say, we have **books** table which is having foriegn key **user_id** of **
 ```php
 	protected function setRelations() {
 		$this->addRelation(array(
-                   	'primary'   => 'id',      
-		    	'table'     => 'books', 
-		    	'foreign'   => 'user_id',
-		    	'variable'  => 'books',
-		  ));
+			'primary'   => 'id',      
+			'table'     => 'books', 
+			'foreign'   => 'user_id',
+			'variable'  => 'books',
+		));
 	}
 ```
 
@@ -307,10 +307,78 @@ The result of setting the relation mentioned above will the attach the n number 
 As you can see, one more array is attached with name **books** to every row.
 
 ### 2. Attaching single row
+For, attaching directly a single row to key, you can pass **single** as true like this
+
+```php
+	protected function setRelations() {
+		$this->addRelation(array(
+			'primary'   => 'id',      
+			'table'     => 'images', 
+			'foreign'   => 'user_id',
+			'variable'  => 'image',
+			'single'    => true
+		));
+	}
+```
+
+#### e) single 	- If passed as true, single row will be attached
+
+The result of setting the relation mentioned above will the attach single image row to users result set.
+
+```php
+	foreach($users as $user) {
+	   	$user->image->id;
+		$user->image->name;
+	}
+```
 
 ### 3. Attaching single column value
 
+For getting only particular column value from table, you can pass one more option as **column**
+```php
+	protected function setRelations() {
+		$this->addRelation(array(
+			'primary'   => 'id',      
+			'table'     => 'images', 
+			'foreign'   => 'user_id',
+			'variable'  => 'image',
+			'column'    => 'name'	
+		));
+	}
+```
+Result will simply get the **name** column value from table images to key **image** in every row of users.
+
+```php
+	foreach($users as $user) {
+	   	$user->image;
+	}
+```
+
+**Note:** When passed column value, single is not necessary
+
 ### 4. Attaching single column value with some modification
 
+For making some modification iwth column value, you can same **column** option as array with **two keys** like this
+```php
+	protected function setRelations() {
+		$this->addRelation(array(
+			'primary'   => 'id',      
+			'table'     => 'images', 
+			'foreign'   => 'user_id',
+			'variable'  => 'image',
+			'column'    => array(
+			      'name'    => 'name',
+			      'modify'  => base_url('images/').'_COL_'
+			   ),	
+		));
+	}
+```
+As you can see, we are passing two key **name** and **modify**. modify having some value along with text **_COL_**. Whatever the value come from table column name. It will contain the extra value we passing along with **_COL_**
 
+Lets say, if image name is **flower.png** , value will be http://yoursite.com/images/flower.png
 
+```php
+	foreach($users as $user) {
+	   	$user->image; // http://yoursite.com/images/flower.png
+	}
+```
