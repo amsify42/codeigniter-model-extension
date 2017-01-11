@@ -354,7 +354,7 @@ Result will simply get the **name** column value from table images to key **imag
 	}
 ```
 
-**Note:** When passed column value, single is not necessary
+**Note:** When passed column value, single is not required
 
 ### 4. Attaching single column value with some modification
 
