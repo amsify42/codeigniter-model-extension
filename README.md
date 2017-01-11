@@ -383,7 +383,7 @@ Lets say, if image name is **flower.png** , value will be http://yoursite.com/im
 	}
 ```
 
-### You can add multiple relations in method one after the other. If you want to do it with single method call, you can use setRelations() method name which is with extra **s**
+You can add multiple relations in method one after the other. If you want to do it with single method call, you can use **setRelations()** method name which is with extra **s**
 
 ```php
 	protected function setRelations() {
