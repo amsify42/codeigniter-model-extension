@@ -361,7 +361,7 @@ Result will simply get the **name** column value from table images to key **imag
 
 ### 4. Attaching single column value with some modification
 
-For making some modification iwth column value, you can same **column** option as array with **two keys** like this
+For making some modification with column value, you can same **column** option as array with **two keys** like this
 ```php
 	protected function setRelations() {
 		$this->addRelation(array(
@@ -386,7 +386,27 @@ Lets say, if image name is **flower.png** , value will be http://yoursite.com/im
 	}
 ```
 
-You can add multiple relations in method one after the other. If you want to do it with single method call, you can use **setRelations()** method name which is with extra **s** letter
+You can add multiple relations in method one after the other. 
+```php
+	protected function setRelations() {
+		$this->addRelation(array(
+			'primary'   => 'id',      
+			'table'     => 'books', 
+			'foreign'   => 'user_id',
+			'variable'  => 'books',
+			));
+
+		$this->addRelation(array(
+			'primary'   => 'id',      
+			'table'     => 'images', 
+			'foreign'   => 'user_id',
+			'variable'  => 'image',
+			'column'    => 'name'
+			));
+	}
+```
+
+If you want to do it with single method call, you can use **setRelations()** method name which is with extra **s** letter
 
 ```php
 	protected function setRelations() {
