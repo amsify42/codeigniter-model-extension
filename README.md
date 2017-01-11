@@ -373,7 +373,7 @@ For making some modification iwth column value, you can same **column** option a
 		));
 	}
 ```
-As you can see, we are passing two keys **name** and **modify**. modify having some value along with text **COL** having underscore at beginning and end. Whatever the value come from table column name. It will contain the extra value we passing along with **COL**
+As you can see, we are passing two keys **name** and **modify**. modify having some value along with text **_ COL _** having underscore at beginning and end. Whatever the value come from table column name. It will contain the extra value we passing along with **_ COL _**
 
 Lets say, if image name is **flower.png** , value will be http://yoursite.com/images/flower.png
 
