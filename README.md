@@ -373,7 +373,7 @@ For making some modification iwth column value, you can same **column** option a
 		));
 	}
 ```
-As you can see, we are passing two keys **name** and **modify**. modify having some value along with text **_ COL _** having underscore at beginning and end. Whatever the value come from table column name. It will contain the extra value we passing along with **_ COL _**
+As you can see, we are passing two keys **name** and **modify**. modify having some value along with text **&lowbar;COL&lowbar;** having underscore at beginning and end. Whatever the value come from table column name. It will contain the extra value we passing along with **&lowbar;COL&lowbar;**
 
 Lets say, if image name is **flower.png** , value will be http://yoursite.com/images/flower.png
 
@@ -382,3 +382,26 @@ Lets say, if image name is **flower.png** , value will be http://yoursite.com/im
 	   	$user->image; // http://yoursite.com/images/flower.png
 	}
 ```
+
+### You can add multiple relations in method one after the other. If you want to do it with single method call, you can use setRelations() method name which is with extra **s**
+
+```php
+	protected function setRelations() {
+		$this->addRelations(
+			array(
+			'primary'   => 'id',      
+			'table'     => 'books', 
+			'foreign'   => 'user_id',
+			'variable'  => 'books',
+			),
+			array(
+			'primary'   => 'id',      
+			'table'     => 'images', 
+			'foreign'   => 'user_id',
+			'variable'  => 'image',
+			'column'    => 'name'
+			),
+		);
+	}
+```
+
