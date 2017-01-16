@@ -263,7 +263,7 @@ class MY_Model extends Pagination {
     public function deleteBatch($conditions, $column = 'id') {
       if($conditions) {
         if(is_array($conditions)) {
-          $IDsArray = $this->getIDsArray($conditions, $id);
+          $IDsArray = $this->getIDsArray($conditions, $column);
           $this->db->where_in($column, $IDsArray);
           return $this->db->delete($this->table);
         } 
