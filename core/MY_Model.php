@@ -79,6 +79,14 @@ class MY_Model extends Pagination {
       return $this->db->query($query)->result();
     }
 
+   /**
+     * This will return last query
+     * @return string
+     */
+    public function lastQuery() {
+      return $this->db->last_query();
+    }
+
     /**
      * count of all rows present in table 
      * @return integer
