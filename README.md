@@ -218,14 +218,14 @@ If you want to get paginated result with some conditions, you can do by couple o
 
 **Make sure to create route for this default pagination config settings. Below is the example**
 ```php
-	$route['/users'] 	= 'controller/method';
-	$route['/users/(:num)'] = 'controller/method';
+	$route['/users']	= 'controller/method';
+	$route['/users/(:num)']	= 'controller/method';
 ```
 Below are some settings of default config which will give you idea of what links will be generated for paginations
 ```php
-	$this->config['num_links']          = 5; 
-      	$this->config['use_page_numbers']   = TRUE;
-      	$this->config['page_query_string']  = FALSE;
+	$this->config['num_links']		= 5; 
+	$this->config['use_page_numbers']	= TRUE;
+	$this->config['page_query_string']	= FALSE;
 ```
 
 **Note:** For exisitng and custom config of pagination, do not forget to create respective routes in routes.php
