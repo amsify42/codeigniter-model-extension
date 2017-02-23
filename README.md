@@ -22,18 +22,18 @@ Now, when you load this model in any controller, you can use like this
 
 ```php
     class Base extends CI_Controller {
-          function __construct() {
-    		parent::__construct();	
-    		$this->load->model('users');
+	function __construct() {
+		parent::__construct();	
+		$this->load->model('users');
     	}
 
-		public function home() {
-		 $data['users'] = $this->users->getAll();
-		}
+	public function home() {
+		$data['users'] = $this->users->getAll();
+	}
     }
 ```
 
-As you can see, we are calling getAll() method which will get all the rows from database table **users**.
+As you can see, we are calling getAll() method which will get all the rows from database **users** table.
 
 If your database table name is different than model class name then you can add table name in protected property of your model class like this
 
@@ -45,7 +45,7 @@ If your database table name is different than model class name then you can add 
 
 Now, all methods called using this model will load data from table **app_users** instead of **users**
 
-Just like we are using **getAll()** method to get all rows from table users, you can also use below methods
+Just like we are using **getAll()** method to get all rows from table **users**, you can also use below methods
 
 ### Get
 
@@ -215,6 +215,19 @@ If you want to get paginated result with some conditions, you can do by couple o
 ```
 **getLinks()** method will get pagination links with some default settings. Pass custom config settings to get the desired results for both pagination result and links. You can also check the constructor method of **Pagination.php** to see what default settings it is using.
 
+
+**Make sure to create route for this default pagination config settings. Below is the example**
+```php
+	$route['/users'] 	= 'controller/method';
+	$route['/users/(:num)'] = 'controller/method';
+```
+Below are some settings of default config which will give you idea of what links will be generated for paginations
+```php
+	$this->config['num_links']          = 5; 
+      	$this->config['use_page_numbers']   = TRUE;
+      	$this->config['page_query_string']  = FALSE;
+```
+
 **Note:** For exisitng and custom config of pagination, do not forget to create respective routes in routes.php
 
 
@@ -291,11 +304,12 @@ Let's say, we have **books** table which is having foriegn key **user_id** of **
 ```
 
 ### These are the options we can pass
-#### a) primary 	- Name of the primary key of table. If not passed, it will take **id** as default
-#### b) table   	- Name of the table from which rows needs to fetched.
-#### c) model   	- Instead of table you can put **model** name which is created the way it is mentioned above.
-#### d) variable   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name(if set) in lower case.
-
+```txt
+primary 	- Name of the primary key of table. If not passed, it will take **id** as default.
+table   	- Name of the table from which rows needs to be fetched.
+model   	- Instead of table you can put **model** name which is created the way it is mentioned above.
+variable   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name(if set) in lower case.
+```
 The result of setting the relation mentioned above will the attach the n number of books to users result set.
 
 ```php
@@ -307,7 +321,7 @@ The result of setting the relation mentioned above will the attach the n number 
 As you can see, one more array is attached with name **books** to every row.
 
 ### 2. Attaching single row
-For, attaching directly a single row to key, you can pass **single** as true like this
+For attaching directly a single row to key, you can pass **single** as true like this
 
 #### e) single 	- If passed as true, single row will be attached
 
@@ -324,7 +338,7 @@ For, attaching directly a single row to key, you can pass **single** as true lik
 ```
 
 
-The result of setting the relation mentioned above will the attach single image row to users result set.
+The result of setting the relation mentioned above will attach single image row to users result set.
 
 ```php
 	foreach($users as $user) {
@@ -361,7 +375,7 @@ Result will simply get the **name** column value from table images to key **imag
 
 ### 4. Attaching single column value with some modification
 
-For making some modification with column value, you can same **column** option as array with **two keys** like this
+For making some modification with column value, you can use same **column** option as array with **two keys** like this
 ```php
 	protected function setRelations() {
 		$this->addRelation(array(
@@ -376,7 +390,7 @@ For making some modification with column value, you can same **column** option a
 		));
 	}
 ```
-As you can see, we are passing two keys **name** and **modify**. modify having some value along with text **&lowbar;COL&lowbar;** having underscore at beginning and end. Whatever the value come from table column name. It will contain the extra value we passing along with **&lowbar;COL&lowbar;**
+As you can see, we are passing two keys **name** and **modify**. modify having some value along with text **&lowbar;COL&lowbar;** having underscore at beginning and end. Whatever the value comes from table column name. It will contain that extra value we are passing along with **&lowbar;COL&lowbar;**
 
 Lets say, if image name is **flower.png** , value will be http://yoursite.com/images/flower.png
 
