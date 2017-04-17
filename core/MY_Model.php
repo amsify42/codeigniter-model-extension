@@ -10,7 +10,13 @@ class MY_Model extends Pagination {
     * Name of the database table
     * @var string
     */
-   protected   $table = '';
+	 protected   $table = '';
+
+   /**
+    * primary key of database table
+    * @var string
+    */
+   protected   $primaryKey = 'id';
 
    /**
     * Database table column names
@@ -28,7 +34,7 @@ class MY_Model extends Pagination {
     * Temporary array for returning
     * @var array
     */
-   protected   $data = array();	
+	 protected   $data = array();	
 
    /**
     * True, if relational data is being called
@@ -79,7 +85,8 @@ class MY_Model extends Pagination {
       return $this->db->query($query)->result();
     }
 
-   /**
+
+    /**
      * This will return last query
      * @return string
      */
@@ -142,15 +149,14 @@ class MY_Model extends Pagination {
     /**
      * Get single row based on id or condition is passed
      * @param  integer $id
-     * @param  string  $column
      * @return array
      */
-    public function find($id, $column = 'id') {
+    public function find($id) {
     	if($id) {
         if(is_array($id)) {
           return $this->db->get_where($this->table, $id)->row();
         } else {
-    		  return $this->db->get_where($this->table, array($column => $id))->row();
+    		  return $this->db->get_where($this->table, array($this->primaryKey => $id))->row();
         }
     	}
     	return $this->data;
@@ -230,16 +236,15 @@ class MY_Model extends Pagination {
      * For updating a row in table by id or condition
      * @param  integer or array $id
      * @param  array   $data
-     * @param  string  $column
      * @return boolean
      */
-    public function update($id, $data = array(), $column = 'id') {
+    public function update($id, $data = array()) {
      	if($id && sizeof($data) > 0) {
         $data = $this->filterFillable($data);
         if(is_array($id)) {
      		 return $this->db->where($id)->update($this->table, $data);
         } else {
-          return $this->db->where($column, $id)->update($this->table, $data);
+          return $this->db->where($this->primaryKey, $id)->update($this->table, $data);
         }
       }
       	return false;
@@ -248,15 +253,14 @@ class MY_Model extends Pagination {
     /**
      * For deleting single row by id or conditions
      * @param  integer or array $id
-     * @param  string  $column
      * @return boolean
      */
-    public function delete($id, $column = 'id') {
+    public function delete($id) {
     	if($id) {
         if(is_array($id)) {
           return $this->db->where($id)->delete($this->table);
         } else {
-          return $this->db->where($column, $id)->delete($this->table);
+          return $this->db->where($this->primaryKey, $id)->delete($this->table);
         }
       }
       return false;
@@ -265,14 +269,13 @@ class MY_Model extends Pagination {
     /**
      * For deleting multiple rows by conditions
      * @param  array  $conditions
-     * @param  string $column
      * @return boolean
      */
-    public function deleteBatch($conditions, $column = 'id') {
+    public function deleteBatch($conditions) {
       if($conditions) {
         if(is_array($conditions)) {
-          $IDsArray = $this->getIDsArray($conditions, $column);
-          $this->db->where_in($column, $IDsArray);
+          $IDsArray = $this->getIDsArray($conditions, $id);
+          $this->db->where_in($this->primaryKey, $IDsArray);
           return $this->db->delete($this->table);
         } 
       }
@@ -283,13 +286,12 @@ class MY_Model extends Pagination {
     /**
      * For deleting multiple rows by Ids
      * @param  array  $conditions
-     * @param  string $column
      * @return boolean
      */
-    public function deleteIDs($IDs, $column = 'id') {
+    public function deleteIDs($IDs) {
       if($IDs) {
         if(is_array($IDs)) {
-          $this->db->where_in($column, $IDs);
+          $this->db->where_in($this->primaryKey, $IDs);
           return $this->db->delete($this->table);
         } 
       }
@@ -309,15 +311,14 @@ class MY_Model extends Pagination {
     /**
      * For getting all the Ids of array of result
      * @param  array  $conditions
-     * @param  string $id
      * @return array
      */
-    public function getIDsArray($conditions, $id = 'id') {
-      $result = $this->db->select($id)->get_where($this->table, $conditions)->result_array();
+    public function getIDsArray($conditions) {
+      $result = $this->db->select($this->primaryKey)->get_where($this->table, $conditions)->result_array();
       $IDs    = array();
       if(sizeof($result)> 0) {
         foreach ($result as $res) {
-          $IDs[] = $res[$id];
+          $IDs[] = $res[$this->primaryKey];
         }
       }
       return $IDs;
@@ -329,15 +330,14 @@ class MY_Model extends Pagination {
      * @param  string  $column
      * @param  any     $value
      * @param  integer $id
-     * @param  string  $primary
      * @return boolean
      */
-    public function checkUnique($column, $value, $id = 0, $primary = 'id') {
+    public function checkUnique($column, $value, $id = 0) {
         $row = array();
         if($id == 0) {
           $row = $this->db->get_where($this->table, array($column => $value))->num_rows();
         } else {
-          $row = $this->db->get_where($this->table, array($primary.' !=' => $id, $column => $value))->num_rows();
+          $row = $this->db->get_where($this->table, array($this->primaryKey.' !=' => $id, $column => $value))->num_rows();
         }
 
         if($row > 0) {
@@ -533,19 +533,20 @@ class MY_Model extends Pagination {
         if(sizeof($this->relations) > 0) {
           foreach($this->relations as $relation) {
 
-            $primary    = isset($relation['primary'])? $relation['primary'] : 'id';
+            $primary    = isset($relation['primary'])? $relation['primary'] : $this->primaryKey;
             $foreign    = isset($relation['foreign'])? $relation['foreign'] : $this->table.'_id';
             $variable   = isset($relation['variable'])? $relation['variable'] : '';
+            $single     = isset($relation['single'])? $relation['single'] : false;
             $column     = isset($relation['column'])? $relation['column'] : '';
             if($variable ==  '' && isset($relation['table'])) {
               $variable  = strtolower($relation['table']);
             }
 
             if(isset($relation['table'])) {
-              $result = $this->attachRelation($result, $primary, $foreign, $variable, $relation['table'], 'table', $column);
+              $result = $this->attachRelation($result, $primary, $foreign, $variable, $relation['table'], 'table', $column, $single);
             }
             else if(isset($relation['model'])) {
-              $result = $this->attachRelation($result, $primary, $foreign, $variable, $relation['model'], 'model', $column);
+              $result = $this->attachRelation($result, $primary, $foreign, $variable, $relation['model'], 'model', $column, $single);
             }
           }
         }
@@ -563,9 +564,10 @@ class MY_Model extends Pagination {
      * @param  string  $table
      * @param  string  $type
      * @param  string  $column
+     * @param  boolean $single
      * @return array
      */
-    protected function attachRelation($result, $primary, $foreign, $variable, $table, $type = 'table', $column = '') {
+    protected function attachRelation($result, $primary, $foreign, $variable, $table, $type = 'table', $column = '', $single = false) {
 
         $IDs = $this->getResultIDsArray($result, $primary, $variable);
 
@@ -582,16 +584,16 @@ class MY_Model extends Pagination {
           foreach($result as $key => $res) {
             if($this->resultType == 'object') {
               if($this->rowType == 'single') {
-                $result->{$variable} = $this->extractRelatedRows($rows, $result->$primary, $foreign, $column);
+                $result->{$variable} = $this->extractRelatedRows($rows, $result->$primary, $foreign, $column, $single);
               } else {
-                $result[$key]->{$variable} = $this->extractRelatedRows($rows, $res->$primary, $foreign, $column);
+                $result[$key]->{$variable} = $this->extractRelatedRows($rows, $res->$primary, $foreign, $column, $single);
               }
             }
             else if($this->resultType == 'array') {
               if($this->rowType == 'single') {
-                $result[$variable] = $this->extractRelatedRows($rows, $result[$primary], $foreign, $column);
+                $result[$variable] = $this->extractRelatedRows($rows, $result[$primary], $foreign, $column, $single);
               } else {
-                $result[$key][$variable] = $this->extractRelatedRows($rows, $res[$primary], $foreign, $column);
+                $result[$key][$variable] = $this->extractRelatedRows($rows, $res[$primary], $foreign, $column, $single);
               }
             }
           }
@@ -608,9 +610,10 @@ class MY_Model extends Pagination {
      * @param  integer $primaryID
      * @param  string  $foreign
      * @param  string  $column
+     * @param  boolean $single
      * @return array or object
      */
-    protected function extractRelatedRows($rows, $primaryID, $foreign, $column = '') {
+    protected function extractRelatedRows($rows, $primaryID, $foreign, $column = '', $single = false) {
 
       $result = new stdClass();
       if($this->resultType == 'array') {
@@ -623,6 +626,11 @@ class MY_Model extends Pagination {
       if(sizeof($rows) > 0) {
         $i = 0;
         foreach($rows as $row) {
+
+          if($single) {
+            return $row;
+          }
+
           if($this->resultType == 'object') {
             if($row->$foreign == $primaryID) {
               if($column == '') {
@@ -662,9 +670,7 @@ class MY_Model extends Pagination {
 
         if($this->resultType == 'object') {
           if(is_array($column)) {
-            if(isset($column['row']) && $column['row']) {
-              return $row;
-            } else if(isset($column['modify'])) {
+            if(isset($column['modify'])) {
               $value = str_replace("_COL_", $row->$column['name'], $column['modify']);
             } else {
               $value = $row->$column['name'];
@@ -675,9 +681,7 @@ class MY_Model extends Pagination {
         }
         else if($this->resultType == 'array') {
           if(is_array($column)) {
-            if(isset($column['row']) && $column['row']) {
-              return $row;
-            } else if(isset($column['modify'])) {
+            if(isset($column['modify'])) {
               $value = str_replace("_COL_", $row[$column['name']], $column['modify']);
             } else {
               $value = $row[$column['name']];
