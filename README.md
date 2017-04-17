@@ -287,9 +287,9 @@ Let's say, we have **books** table which is having foriegn key **user_id** of **
 
 ### These are the options we can pass
 ```txt
-primary 	- Name of the primary key of table. If not passed, it will take **id** as default or from $primaryKey property of model class.
+primary 	- Name of the primary key of table. If not passed, it will take "id" as default or from $primaryKey property of model class.
 table   	- Name of the table from which rows needs to be fetched.
-model   	- Instead of table you can put **model** name which is created the way it is mentioned above.
+model   	- Instead of table you can put "model" name which is created the way it is mentioned above.
 variable   	- Name of the variable that needs to be added in each row of result set. If not passed, it will take foreign table name(if set) in lower case.
 ```
 The result of setting the relation mentioned above will the attach the n number of books to users result set.
