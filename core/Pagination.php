@@ -10,31 +10,31 @@ class Pagination extends CI_Model {
    * Pagination page number
    * @var integer
    */
-	private    $page           = 1;
+  private    $page           = 1;
 
   /**
    * This is the array of pagination config
    * @var array
    */
-	private    $config         = array();
+  private    $config         = array();
 
   /**
    * Set true if conditions passed for pagination
    * @var boolean
    */
-	private    $conditions     = false;
+  private    $conditions     = false;
 
   /**
    * Pagination limit per page
    * @var integer
    */
-	private    $limit  	       = 1; 
+  private    $limit  	       = 1; 
 
   /**
    * Query created based on conditions passed
    * @var string
    */
-	private    $customQuery;
+  private    $customQuery;
 
   /**
    * This is a collection of conditions passed to pagination
@@ -80,7 +80,7 @@ class Pagination extends CI_Model {
   /**
    * __construct contains the default config of pagination
    */
-	function __construct(){
+  function __construct(){
       parent::__construct();
       $this->config['uri_segment']        = $this->getURISegment();
       $this->config['base_url']           = $this->getCurrentURL();
