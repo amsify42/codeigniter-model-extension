@@ -10,7 +10,7 @@ class MY_Model extends Pagination {
     * Name of the database table
     * @var string
     */
-	 protected   $table = '';
+   protected   $table = '';
 
    /**
     * primary key of database table
@@ -34,7 +34,7 @@ class MY_Model extends Pagination {
     * Temporary array for returning
     * @var array
     */
-	 protected   $data = array();	
+   protected   $data = array();	
 
    /**
     * True, if relational data is being called
@@ -274,7 +274,7 @@ class MY_Model extends Pagination {
     public function deleteBatch($conditions) {
       if($conditions) {
         if(is_array($conditions)) {
-          $IDsArray = $this->getIDsArray($conditions, $id);
+          $IDsArray = $this->getIDsArray($conditions);
           $this->db->where_in($this->primaryKey, $IDsArray);
           return $this->db->delete($this->table);
         } 
