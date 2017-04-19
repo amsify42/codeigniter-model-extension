@@ -57,9 +57,9 @@ If you have table name with underscore between text and you do not want to defin
 ```
 As you can see above, there are two example which use camel case and specially second one which has second section of class name has all capital letters.
 <br/>
-Here **AppUsers** will be converted to **app_users** and
+Here **AppUsers** will be converted to **app_users**
 <br/>
-Here **MobileAPP** will be converted to **mobile_app** and
+and **MobileAPP** will be converted to **mobile_app** and
 
 <br/><br/>
 Just like we are using **getAll()** method to get all rows from table **users**, you can also use below methods
