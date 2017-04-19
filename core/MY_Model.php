@@ -60,8 +60,17 @@ class MY_Model extends Pagination {
    function __construct(){
       parent::__construct();
       if($this->table == '') {
-      	$this->table = strtolower(get_called_class());
+      	$this->table = $this->classToTable(get_called_class());
       }
+    }
+
+   /**
+     * convert class name to assuming database table name
+     * @param  string $string
+     * @return string
+     */
+    private function classToTable($string) {
+        return strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $string));
     }
 
     /**
