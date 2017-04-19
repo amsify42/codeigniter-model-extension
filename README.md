@@ -10,6 +10,8 @@ For extending model classes you need to put two files
     
 in **application/core/**
 
+
+## Table Name
 Whenever you create model class, extend MY_Model instead of CI_Model like this
 
 ```php
@@ -61,10 +63,7 @@ Here **AppUsers** will work for table name **app_users**
 <br/>
 and **MobileAPP** will work for table name **mobile_app** and
 
-<br/><br/>
-Just like we are using **getAll()** method to get all rows from table **users**, you can also use below methods
-
-### Primary Key
+## Primary Key
 All methods which use primary key **id** as default can be changed by defining protected property from model class like this
 
 ```php		
@@ -72,6 +71,9 @@ All methods which use primary key **id** as default can be changed by defining p
     	 protected $primaryKey  = 'userid';    
       }
 ```
+
+## Methods
+Just like we are using **getAll()** method to get all rows from table **users**, you can also use below methods
 ### Get
 
 To get count of all rows
