@@ -44,7 +44,24 @@ If your database table name is different than model class name then you can add 
 ```
 
 Now, all methods called using this model will load data from table **app_users** instead of **users**
+<br/><br/>
 
+If you have table name with underscore between text and you do not want to define protected property table, then you can also name model class in a way that it will convert it to table name
+
+```php
+     class AppUsers extends MY_Model {
+     }	
+
+     class MobileAPP extends MY_Model {
+     }		
+```
+As you can see above, there are two example which use camel case and specially second one which has second section of class name has all capital letters.
+<br/>
+Here **AppUsers** will be converted to **app_users** and
+<br/>
+Here **MobileAPP** will be converted to **mobile_app** and
+
+<br/><br/>
 Just like we are using **getAll()** method to get all rows from table **users**, you can also use below methods
 
 ### Primary Key
