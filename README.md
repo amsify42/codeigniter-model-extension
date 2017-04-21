@@ -10,8 +10,6 @@ For extending model classes you need to put two files
     
 in **application/core/**
 
-
-## Table Name
 Whenever you create model class, extend MY_Model instead of CI_Model like this
 
 ```php
