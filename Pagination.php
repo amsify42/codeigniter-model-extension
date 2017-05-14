@@ -214,7 +214,7 @@ class Pagination extends CI_Model {
         if($this->conditions || sizeof($this->CI_Conditions)>0) {
           $this->config['total_rows'] = $this->countRows();
         } else {
-          $this->config['total_rows'] = $this->count_all();
+          $this->config['total_rows'] = $this->countAll();
         }
 
         if(!$query->num_rows()){

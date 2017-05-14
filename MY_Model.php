@@ -107,7 +107,7 @@ class MY_Model extends Pagination {
      * count of all rows present in table 
      * @return integer
      */
-    public function count_all() {
+    public function countAll() {
       return $this->db->count_all($this->table);
     }
 

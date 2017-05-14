@@ -78,7 +78,7 @@ Just like we are using **getAll()** method to get all rows from table **users**,
 To get count of all rows
 
 ```php
-    $this->users->count_all();
+    $this->users->countAll();
 ```
 
 To get the rows with conditions passed to it
