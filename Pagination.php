@@ -28,7 +28,7 @@ class Pagination extends CI_Model {
    * Pagination limit per page
    * @var integer
    */
-  private    $limit  	       = 1; 
+  private    $limit          = 1; 
 
   /**
    * Query created based on conditions passed
@@ -74,7 +74,7 @@ class Pagination extends CI_Model {
                                 'field_data',
                                 'free_result',
                                 'list_fields'
-                                ); 		
+                                );    
 
 
   /**
@@ -113,7 +113,7 @@ class Pagination extends CI_Model {
       $this->config['last_tag_open']      = '<li>';
       $this->config['last_tag_close']     = '</li>';
 
-    }	
+    } 
 
 
     /**
@@ -291,7 +291,7 @@ class Pagination extends CI_Model {
      * @return integer
      */
     public function getTotalRows() {
-		return $this->config['total_rows'];
+    return $this->config['total_rows'];
     }
 
 

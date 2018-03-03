@@ -34,7 +34,7 @@ class MY_Model extends Pagination {
     * Temporary array for returning
     * @var array
     */
-   protected   $data = array();	
+   protected   $data = array(); 
 
    /**
     * True, if relational data is being called
@@ -55,12 +55,18 @@ class MY_Model extends Pagination {
    protected   $rowType = 'multiple';
 
    /**
+    * For created_at/updated_at timestamps
+    * @var string
+    */
+   protected   $timestamps = false;
+
+   /**
     * This will set automatic table name based on name of model class
     */
    function __construct(){
       parent::__construct();
       if($this->table == '') {
-      	$this->table = $this->classToTable(get_called_class());
+        $this->table = $this->classToTable(get_called_class());
       }
     }
 
@@ -111,13 +117,22 @@ class MY_Model extends Pagination {
       return $this->db->count_all($this->table);
     }
 
+    /**
+     * count of rows with/without conditions 
+     * @return integer
+     */
+    public function count() {
+      return $this->db->from($this->table)->count_all_results();
+    }
+
 
     /**
      * get all rows present in table 
      * @return array
      */
     public function getAll() {
-      return $this->db->select('*')->from($this->table)->get()->result();
+      $result = $this->db->select('*')->from($this->table)->get()->result();
+      return $this->filterResults($result);
     }
 
 
@@ -128,7 +143,8 @@ class MY_Model extends Pagination {
      */
     public function getWhere($conditions) {
       if(is_array($conditions)) {
-        return $this->db->get_where($this->table, $conditions)->result();
+        $result = $this->db->get_where($this->table, $conditions)->result();
+        return $this->filterResults($result);
       }
       return false;
     }
@@ -145,9 +161,15 @@ class MY_Model extends Pagination {
         if(is_array($IDsArray)) {
            $query = $this->db->from($this->table)->where_in($column, $IDsArray)->get();
            if($type == 'array') {
-            return $query->result_array();
+            if($this->rowType == 'single')
+              return $this->filterResults($query->row_array());
+            else  
+              return $this->filterResults($query->result_array());
            } else {
-            return $query->result();
+            if($this->rowType == 'single')
+              return $this->filterResults($query->row());
+            else  
+              return $this->filterResults($query->result());
            }
         } 
       }
@@ -161,14 +183,14 @@ class MY_Model extends Pagination {
      * @return array
      */
     public function find($id) {
-    	if($id) {
+      if($id) {
         if(is_array($id)) {
-          return $this->db->get_where($this->table, $id)->row();
+          return $this->filterResults($this->db->get_where($this->table, $id)->row());
         } else {
-    		  return $this->db->get_where($this->table, array($this->primaryKey => $id))->row();
+          return $this->filterResults($this->db->get_where($this->table, array($this->primaryKey => $id))->row());
         }
-    	}
-    	return $this->data;
+      }
+      return $this->data;
     }
 
 
@@ -218,12 +240,12 @@ class MY_Model extends Pagination {
      * @return integer or boolean
      */
     public function insert($data = array()) {
-     	if(sizeof($data) > 0) {
+      if(sizeof($data) > 0) {
         $data = $this->filterFillable($data);
-    		$this->db->insert($this->table, $data);
+        $this->db->insert($this->table, $data);
         return $this->db->insert_id();
-    	}
-      	return false;
+      }
+        return false;
     }
 
 
@@ -248,15 +270,15 @@ class MY_Model extends Pagination {
      * @return boolean
      */
     public function update($id, $data = array()) {
-     	if($id && sizeof($data) > 0) {
-        $data = $this->filterFillable($data);
+      if($id && sizeof($data) > 0) {
+        $data = $this->filterFillable($data, false, 'update');
         if(is_array($id)) {
-     		 return $this->db->where($id)->update($this->table, $data);
+         return $this->db->where($id)->update($this->table, $data);
         } else {
           return $this->db->where($this->primaryKey, $id)->update($this->table, $data);
         }
       }
-      	return false;
+        return false;
     }
 
     /**
@@ -265,7 +287,7 @@ class MY_Model extends Pagination {
      * @return boolean
      */
     public function delete($id) {
-    	if($id) {
+      if($id) {
         if(is_array($id)) {
           return $this->db->where($id)->delete($this->table);
         } else {
@@ -362,9 +384,10 @@ class MY_Model extends Pagination {
     * For converting data set into fillable column names
     * @param  array   $data
     * @param  boolean $batch
+    * @param  string  $type
     * @return array
     */
-   private function filterFillable($data, $batch = false) {
+   private function filterFillable($data, $batch = false, $type = 'save') {
       if(sizeof($this->fillable) > 0) {
         if($batch) {
           foreach($data as $key => $row) {
@@ -382,6 +405,33 @@ class MY_Model extends Pagination {
           }
         }
       }
+      return $this->checkTimestamps($data, $batch, $type);
+   }
+
+   /**
+    * For adding timestamps to row during insert/update
+    * @param  array   $data
+    * @param  boolean $batch
+    * @param  string  $type
+    * @return array
+    */
+   public function checkTimestamps($data, $batch, $type) {
+      if($this->timestamps) {
+        $timestamp = date('Y-m-d H:i:s');
+        if($batch) {
+          foreach($data as $key => $row) {
+            if($type == 'save') {
+              $data[$key]['created_at'] = $timestamp;    
+            }
+            $data[$key]['updated_at'] = $timestamp;
+          }
+        } else {
+          if($type == 'save') {
+            $data['created_at'] = $timestamp;    
+          }
+          $data['updated_at'] = $timestamp;
+        }
+      }
       return $data;
    }
 
@@ -393,7 +443,17 @@ class MY_Model extends Pagination {
    public function relate() {
       $this->getRelation = true;
       return $this;
-    }
+   }
+
+
+   /**
+    * For unsetting relations as true for fetching relational result
+    * @return object
+    */
+   public function unrelate() {
+      $this->getRelation = false;
+      return $this;
+   }
 
    /**
     * For getting all the Ids of the result
@@ -484,7 +544,7 @@ class MY_Model extends Pagination {
 
       if(sizeof($result) > 0) {
         if(sizeof($this->hidden) > 0) {
-          $result = $this->hideData($result);
+          $result = $this->filterHide($result);
         }
         if(sizeof($this->relations) > 0) {
           $result = $this->processRelations($result);
@@ -500,7 +560,7 @@ class MY_Model extends Pagination {
      * @param  array $result
      * @return array
      */
-    protected function hideData($result) {
+    protected function filterHide($result) {
 
       $type = '';
 
