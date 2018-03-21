@@ -86,33 +86,34 @@ class Pagination extends CI_Model {
       $this->config['base_url']           = $this->getCurrentURL();
       $this->config['num_links']          = 5; 
       $this->config['use_page_numbers']   = TRUE;
-      $this->config['page_query_string']  = FALSE;
+      $this->config['page_query_string']  = TRUE;
 
       $this->config['full_tag_open']      = '<ul class="pagination">';
       $this->config['full_tag_close']     = '</ul>';
 
       $this->config['first_link']         = 'First';
-      $this->config['first_tag_open']     = '<li>';
+      $this->config['first_tag_open']     = '<li class="page-item">';
       $this->config['first_tag_close']    = '</li>';
 
       $this->config['prev_link']          = 'Prev';
-      $this->config['prev_tag_open']      = '<li>';
+      $this->config['prev_tag_open']      = '<li class="page-item">';
       $this->config['prev_tag_close']     = '</li>';
 
       $this->config['next_link']          = 'Next';
-      $this->config['next_tag_open']      = '<li>';
+      $this->config['next_tag_open']      = '<li class="page-item">';
       $this->config['next_tag_close']     = '</li>';
 
-      $this->config['cur_tag_open']       = '<li class="active"><a href="#">';
+      $this->config['cur_tag_open']       = '<li class="page-item active"><a class="page-link" href="#">';
       $this->config['cur_tag_close']      = '</a></li>';
 
-      $this->config['num_tag_open']       = '<li>';
+      $this->config['num_tag_open']       = '<li class="page-item">';
       $this->config['num_tag_close']      = '</li>';
 
       $this->config['last_link']          = 'Last';
-      $this->config['last_tag_open']      = '<li>';
+      $this->config['last_tag_open']      = '<li class="page-item">';
       $this->config['last_tag_close']     = '</li>';
 
+      $this->config['anchor_class']       = 'class="page-link" ';
     } 
 
 
@@ -184,7 +185,9 @@ class Pagination extends CI_Model {
         if($page != '') {
             $this->page   = $page;
         } else {
-          if($this->uri->segment($this->config['uri_segment'])) {
+          if($this->config['page_query_string'] && isset($_GET['per_page'])) {
+              $this->page   = $this->input->get('per_page', TRUE);
+          } else if($this->uri->segment($this->config['uri_segment'])) {
               $this->page   = (int)($this->uri->segment($this->config['uri_segment']));
           }
         }

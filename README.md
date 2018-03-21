@@ -215,21 +215,18 @@ If you want to get paginated result with some conditions, you can do by couple o
 ```
 **getLinks()** method will get pagination links with some default settings. Pass custom config settings to get the desired results for both pagination result and links. You can also check the constructor method of **Pagination.php** to see what default settings it is using.
 
-
-**Make sure to create route for this default pagination config settings. Below is the example**
-```php
-	$route['/users']	= 'controller/method';
-	$route['/users/(:num)']	= 'controller/method';
-```
 Below are some settings of default config which will give you idea of what links will be generated for paginations
 ```php
-	$this->config['num_links']		= 5; 
+	$this->config['num_links']			= 5; 
 	$this->config['use_page_numbers']	= TRUE;
-	$this->config['page_query_string']	= FALSE;
+	$this->config['page_query_string']	= TRUE;
 ```
 
-**Note:** For exisitng and custom config of pagination, do not forget to create respective routes in routes.php
-
+**Note:** With default settings will, pagination links will be generated something like this
+```txt
+	http://www.site.com/users?per_page=1
+	http://www.site.com/users?per_page=2
+```
 
 ## Using Pre defined methods
 
