@@ -281,7 +281,7 @@ If you want timestamps to be stored automatically while adding/updating row. You
 ```
 
 
-## Relations
+## Relations [:arrow_double_up:](#table-of-contents)
 
 For getting rows or single column value from other database tables based on relations, you have to define one protected function in your model class with name **setRelations**
 ```php		
