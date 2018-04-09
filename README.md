@@ -36,15 +36,15 @@ When you load this model in any controller, you can use
 As you can see, we are calling getAll() method which will get all the rows from database **users** table.
 
 # Content
-### [Table Name](#table-name)
-### [Primary Key](#table-name)
-### [Methods](#table-name)
-### [Pagination](#table-name)
-### [Pre defined methods](#pre-defined-methods)
-### [Hidden columns](#hidden-columns)
-### [Fillable columns](#fillable-columns)
-### [Timestamps](#timestamps)
-### [Relations](#relations)
+[Table Name](#table-name)
+[Primary Key](#primary-key)
+[Methods](#methods)
+[Pagination](#pagination)
+[Pre defined methods](#pre-defined-methods)
+[Hidden columns](#hidden-columns)
+[Fillable columns](#fillable-columns)
+[Timestamps](#timestamps)
+[Relations](#relations)
 
 ## Table Name
 If your database table name is different than model class name then you can add table name in protected property of your model class
