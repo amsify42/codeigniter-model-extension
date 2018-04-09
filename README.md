@@ -46,7 +46,7 @@ As you can see, we are calling getAll() method which will get all the rows from 
 8. [Timestamps](#timestamps-point_up_2)
 9. [Relations](#relations-point_up_2)
 
-## Table Name [:point_up_2:](#table-of-contents)
+## Table Name
 If your database table name is different than model class name then you can add table name in protected property of your model class
 
 ```php		
