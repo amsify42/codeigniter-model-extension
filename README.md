@@ -122,16 +122,16 @@ To insert multiple rows in table
 
 To update single row in table
 ```php  
-    $id  = 1;
-    $row = array('name' => 'some name', 'active' => 1);
-    $this->users->update($id, $row);
+    $id  	= 1;
+    $values = array('name' => 'some name', 'active' => 1);
+    $this->users->update($id, $values);
 ```
 
 To update multiple rows in table with conditions passed to it
 ```php  
     $conditions = array('active' => 1);
-    $row 		= array('email_sent' => 1);
-    $this->users->update($conditions, $row);
+    $values		= array('email_sent' => 1);
+    $this->users->update($conditions, $values);
 ```
 
 ### Delete
