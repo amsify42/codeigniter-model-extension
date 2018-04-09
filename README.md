@@ -35,7 +35,7 @@ When you load this model in any controller, you can use
 
 As you can see, we are calling getAll() method which will get all the rows from database **users** table.
 
-# Content
+# Table of Contents
 1. [Table Name](#table-name)
 2. [Primary Key](#primary-key)
 3. [Methods](#methods)
