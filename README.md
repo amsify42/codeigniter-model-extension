@@ -36,17 +36,17 @@ When you load this model in any controller, you can use
 As you can see, we are calling getAll() method which will get all the rows from database **users** table.
 
 # Table of Contents
-1. [Table Name](#table-name)
-2. [Primary Key](#primary-key)
-3. [Methods](#methods)
-4. [Pagination](#pagination)
-5. [Pre defined methods](#pre-defined-methods)
-6. [Hidden columns](#hidden-columns)
-7. [Fillable columns](#fillable-columns)
-8. [Timestamps](#timestamps)
-9. [Relations](#relations)
+1. [Table Name](#table-name-point_up_2)
+2. [Primary Key](#primary-key-point_up_2)
+3. [Methods](#methods-point_up_2)
+4. [Pagination](#pagination-point_up_2)
+5. [Pre defined methods](#pre-defined-methods-point_up_2)
+6. [Hidden columns](#hidden-columns-point_up_2)
+7. [Fillable columns](#fillable-columns-point_up_2)
+8. [Timestamps](#timestamps-point_up_2)
+9. [Relations](#relations-point_up_2)
 
-## Table Name
+## Table Name [:point_up_2:](#table-of-contents)
 If your database table name is different than model class name then you can add table name in protected property of your model class
 
 ```php		
@@ -73,7 +73,7 @@ Here **AppUsers** will work for table name **app_users**
 <br/>
 and **MobileAPP** will work for table name **mobile_app** and
 
-## Primary Key
+## Primary Key [:point_up_2:](#table-of-contents)
 All methods which use primary key **id** as default can be changed by defining protected property from model class
 
 ```php		
@@ -82,7 +82,7 @@ All methods which use primary key **id** as default can be changed by defining p
       }
 ```
 
-## Methods
+## Methods [:point_up_2:](#table-of-contents)
 Just like we are using **getAll()** method to get all rows from table **users**, you can also use below methods
 
 ### Get
@@ -187,7 +187,7 @@ If you want to check value exist except for particular id of the table, you can 
 Now, while checking for unique value it will skip the row with this id.
 
 
-## Pagination
+## Pagination [:point_up_2:](#table-of-contents)
 
 If you want to get paginated result of this same table with limit 10, you can call paginate function from model instance
 ```php
@@ -232,7 +232,7 @@ Below are some settings of default config which will give you idea of what links
 	http://www.site.com/users?per_page=2
 ```
 
-## Pre defined methods
+## Pre defined methods [:point_up_2:](#table-of-contents)
 
 You can use all the pre defined db methods of codeigniter as a chain as well to get the result. Below are the examples
 ```php
@@ -249,7 +249,7 @@ You can also skip get() method and fetch the results. As get() method will autom
 ```
 
 
-## Hidden columns
+## Hidden columns [:point_up_2:](#table-of-contents)
 
 We can make the result sets to hide the column values from rows. For example, If we have a table **users** and we don't want to allow **password** and **token** to be available whenever user information is fetched. We can define protected array variable with name **hidden** in model class
 ```php		
@@ -260,7 +260,7 @@ We can make the result sets to hide the column values from rows. For example, If
 
 **Note:** You can achieve this only by calling methods from the model object not by using **$this->db** separately somehwere
 
-## Fillable columns
+## Fillable columns [:point_up_2:](#table-of-contents)
 
 This option will not let any query to add any column data we pass for saving or updating in the table. Let's say, We want users to allow only **email**, **name** and **password** to be inserted or updated and rest of the column values must be ignored even if they pass it. We can define protected array variable with name **fillable** in model class
 ```php		
@@ -271,7 +271,7 @@ This option will not let any query to add any column data we pass for saving or 
 
 **Note:** You can achieve this only by calling methods from the model object not by using **$this->db** separately somehwere
 
-## Timestamps
+## Timestamps [:point_up_2:](#table-of-contents)
 
 If you want timestamps to be stored automatically while adding/updating row. You can set protected property **$timestamps** as **true** and make sure the table have these columns created **created_at** and **updated_at** of type timestamp
 ```php		
@@ -281,7 +281,7 @@ If you want timestamps to be stored automatically while adding/updating row. You
 ```
 
 
-## Relations [:arrow_double_up:](#table-of-contents)
+## Relations [:point_up_2:](#table-of-contents)
 
 For getting rows or single column value from other database tables based on relations, you have to define one protected function in your model class with name **setRelations**
 ```php		
