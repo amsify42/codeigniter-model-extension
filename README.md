@@ -36,7 +36,15 @@ When you load this model in any controller, you can use
 As you can see, we are calling getAll() method which will get all the rows from database **users** table.
 
 # Content
-## [Table Name](#table-name)
+### [Table Name](#table-name)
+### [Primary Key](#table-name)
+### [Methods](#table-name)
+### [Pagination](#table-name)
+### [Pre defined methods](#pre-defined-methods)
+### [Hidden columns](#hidden-columns)
+### [Fillable columns](#fillable-columns)
+### [Timestamps](#timestamps)
+### [Relations](#relations)
 
 ## Table Name
 If your database table name is different than model class name then you can add table name in protected property of your model class
@@ -224,7 +232,7 @@ Below are some settings of default config which will give you idea of what links
 	http://www.site.com/users?per_page=2
 ```
 
-## Using Pre defined methods
+## Pre defined methods
 
 You can use all the pre defined db methods of codeigniter as a chain as well to get the result. Below are the examples
 ```php
@@ -241,7 +249,7 @@ You can also skip get() method and fetch the results. As get() method will autom
 ```
 
 
-## Hidden column values
+## Hidden columns
 
 We can make the result sets to hide the column values from rows. For example, If we have a table **users** and we don't want to allow **password** and **token** to be available whenever user information is fetched. We can define protected array variable with name **hidden** in model class
 ```php		
