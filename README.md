@@ -122,7 +122,7 @@ To insert multiple rows in table
 
 To update single row in table
 ```php  
-    $id  	= 1;
+    $id = 1;
     $values = array('name' => 'some name', 'active' => 1);
     $this->users->update($id, $values);
 ```
@@ -130,7 +130,7 @@ To update single row in table
 To update multiple rows in table with conditions passed to it
 ```php  
     $conditions = array('active' => 1);
-    $values		= array('email_sent' => 1);
+    $values = array('email_sent' => 1);
     $this->users->update($conditions, $values);
 ```
 
@@ -138,7 +138,7 @@ To update multiple rows in table with conditions passed to it
 
 To delete row in table
 ```php  
-    $id  = 1;
+    $id = 1;
     $this->users->delete($id);
 ```
 
@@ -170,7 +170,7 @@ To check value already exist of particular column
 If you want to check value exist except for particular id of the table, you can pass 3rd parameter as id which you want to skip while checking value
 ```php
     $email = 'some@mail.com';
-    $id    = 2;
+    $id = 2;
     $this->users->checkUnique('email', $email, $id);
 ```
 Now, while checking for unique value it will skip the row with this id.
@@ -201,18 +201,18 @@ If you want to get paginated result with some conditions, you can do it by coupl
 3) For changing the pagination config you can pass config as 3rd parameter to the method paginate. 2nd parameter is page number to use while getting pagination through Ajax but for now you can pass it as empty string.
 ```php
     $config['uri_segment'] = 3;
-    $config['base_url']    = 'index.php/users';
+    $config['base_url'] = 'index.php/users';
 
-    $users   = $this->users->paginate(10, '', $config);
-    $links   = $this->users->getLinks();
+    $users = $this->users->paginate(10, '', $config);
+    $links = $this->users->getLinks();
 ```
 **getLinks()** method will get pagination links with some default settings. Pass custom config settings to get the desired results for both pagination result and links. You can also check the constructor method of **Pagination.php** to see what default settings it is using.
 
 Below are some settings of default config which will give you idea of what links will be generated for pagination
 ```php
-	$this->config['num_links']			= 5;
-	$this->config['use_page_numbers']	= TRUE;
-	$this->config['page_query_string']	= TRUE;
+	$this->config['num_links'] = 5;
+	$this->config['use_page_numbers'] = TRUE;
+	$this->config['page_query_string'] = TRUE;
 ```
 
 **Note:** With default settings, pagination links will be generated something like this
