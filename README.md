@@ -35,6 +35,9 @@ When you load this model in any controller, you can use
 
 As you can see, we are calling getAll() method which will get all the rows from database **users** table.
 
+# Content
+## [Table Name](#table-name)
+
 ## Table Name
 If your database table name is different than model class name then you can add table name in protected property of your model class
 
