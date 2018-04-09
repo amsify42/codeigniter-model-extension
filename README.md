@@ -73,23 +73,21 @@ All methods which use primary key **id** as default can be changed by defining p
 
 ## Methods
 Just like we are using **getAll()** method to get all rows from table **users**, you can also use below methods
+
 ### Get
 
 To get count of all rows
-
 ```php
     $this->users->countAll();
 ```
 
 To get the rows with conditions passed to it
-
 ```php
     $conditions = array('active' => 1);
     $this->users->getWhere($conditions);
 ```
 
 Get single row with particular ID or Conditions
-
 ```php
     $this->users->find(1);
     // or
@@ -98,7 +96,6 @@ Get single row with particular ID or Conditions
 ```
 
 For getting maximum, minimum, average and sum of values, you can use these below methods. The only parameter used here is the name of table column name and this calls will directly get the result value rather than array or object.
-
 ```php
     $this->users->max('points');
     $this->users->min('points');
@@ -109,14 +106,12 @@ For getting maximum, minimum, average and sum of values, you can use these below
 ### Insert/Update
 
 To insert single row in table
-
 ```php
     $row = array('name' => 'some name', 'active' => 1);
     $this->users->insert($row);
 ```
 
 To insert multiple rows in table
-
 ```php
     $rows = array(
           array('name' => 'some name', 'active' => 1),
@@ -126,7 +121,6 @@ To insert multiple rows in table
 ```
 
 To update single row in table
-
 ```php  
     $id  = 1;
     $row = array('name' => 'some name', 'active' => 1);
@@ -134,7 +128,6 @@ To update single row in table
 ```
 
 To update multiple rows in table with conditions passed to it
-
 ```php  
     $conditions = array('active' => 1);
     $row 		= array('email_sent' => 1);
@@ -144,28 +137,24 @@ To update multiple rows in table with conditions passed to it
 ### Delete
 
 To delete row in table
-
 ```php  
     $id  = 1;
     $this->users->delete($id);
 ```
 
 To delete multiple rows in table by conditions
-
 ```php
     $conditions = array('active' => 0);
     $this->users->deleteBatch($conditions);
 ```
 
 To delete multiple rows by their IDs
-
 ```php
     $IDs = array(1, 2, 3);
     $this->users->deleteIDs($IDs);
 ```
 
 To truncate the table
-
 ```php
     $this->users->truncate();
 ```
@@ -221,7 +210,7 @@ If you want to get paginated result with some conditions, you can do it by coupl
 
 Below are some settings of default config which will give you idea of what links will be generated for pagination
 ```php
-	$this->config['num_links']			= 5; 
+	$this->config['num_links']			= 5;
 	$this->config['use_page_numbers']	= TRUE;
 	$this->config['page_query_string']	= TRUE;
 ```
