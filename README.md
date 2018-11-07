@@ -39,7 +39,7 @@ When you load this model in any controller, you can use
 As you can see, we are calling getAll() method which will get all the rows from database **users** table.
 
 # Table of Contents
-1. [Table Name](#table-name-point_up_2)
+1. [Table Name](#table-name)
 2. [Primary Key](#primary-key-point_up_2)
 3. [Methods](#methods-point_up_2)
 4. [Pagination](#pagination-point_up_2)
