@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/amsify42/codeigniter-model-extension/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/amsify42/codeigniter-model-extension/blob/master/LICENSE)
 
 Codeigniter Model Extension
 ---------------------------
