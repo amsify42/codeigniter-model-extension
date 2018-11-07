@@ -1,4 +1,3 @@
-[![Downloads](https://img.shields.io/github/downloads/atom/atom/total.svg)](https://github.com/amsify42/codeigniter-model-extension) 
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/amsify42/codeigniter-model-extension/blob/master/LICENSE)
 
 Codeigniter Model Extension
